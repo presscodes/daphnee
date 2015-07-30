@@ -154,6 +154,7 @@ class Daphnee {
 	private static $instance = null;
 
 	public $template;
+	public $layout;
 
 	public static function get_instance() {
 		if ( null === self::$instance ) {
@@ -164,6 +165,7 @@ class Daphnee {
 
 	public function __construct() {
 		$this->template = new Daphnee_Template();
+		$this->layout   = new Daphnee_Layout();
 	}
 }
 
@@ -216,7 +218,7 @@ class Daphnee_Template {
 
 	public function sidebar() {
 		ob_start(); ?>
-		<div id="secondary" class="widget-area" role="complementary">
+		<div id="secondary" class="widget-area <?php echo Daphnee()->layout->sidebar_columns(); ?>" role="complementary">
 			<?php dynamic_sidebar( 'sidebar-1' ); ?>
 		</div><!-- #secondary -->
 		<?php
@@ -316,8 +318,8 @@ class Daphnee_Template {
 
 	public function footer() {
 		ob_start(); ?>
-		<footer id="colophon" class="site-footer" role="contentinfo">
-			<div class="site-info">
+		<footer id="colophon" class="site-footer row" role="contentinfo">
+			<div class="site-info col_12">
 				<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'daphnee' ) ); ?>"><?php printf( esc_html__( 'Proudly powered by %s', 'daphnee' ), 'WordPress' ); ?></a>
 				<span class="sep"> | </span>
 				<?php printf( esc_html__( 'Theme: %1$s by %2$s.', 'daphnee' ), 'daphnee', '<a href="https://press.codes" rel="designer">PressCodes Team</a>' ); ?>
@@ -325,6 +327,18 @@ class Daphnee_Template {
 		</footer><!-- #colophon -->
 		<?php
 		echo apply_filters( 'daphnee/template/footer', ob_get_clean() );
+	}
+
+}
+
+class Daphnee_Layout {
+
+	public function main_content_columns() {
+		return 'col_9';
+	}
+
+	public function sidebar_columns() {
+		return 'col_3';
 	}
 
 }

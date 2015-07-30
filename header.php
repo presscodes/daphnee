@@ -17,7 +17,7 @@ Daphnee()->template->head();
 ?>
 
 <body <?php body_class(); ?>>
-<div id="page" class="hfeed site">
+<div id="page" class="hfeed site wrapper">
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'daphnee' ); ?></a>
 
 	<?php
@@ -27,4 +27,4 @@ Daphnee()->template->head();
 	Daphnee()->template->header();
 	?>
 
-	<div id="content" class="site-content">
+	<div id="content" class="site-content row">
