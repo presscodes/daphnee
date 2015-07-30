@@ -332,14 +332,14 @@ if ( class_exists( 'Kirki' ) ) {
 		'section'     => 'colors',
 		'output'      => array(
 			array(
-				'element'  => 'a, a:visited',
+				'element'  => 'a, a:visited, a:hover',
 				'property' => 'color',
 			),
 		),
 		'transport'   => 'postMessage',
 		'js_vars'     => array(
 			array(
-				'element'  => 'a, a:visited',
+				'element'  => 'a, a:visited, a:hover',
 				'function' => 'css',
 				'property' => 'color',
 			)
