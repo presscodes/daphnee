@@ -8,22 +8,28 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="entry-header">
-		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-	</header><!-- .entry-header -->
+	<?php
+	/**
+	 * The entry header
+	 */
+	Daphnee()->template->content_header( 'singular', 'page' );
+	?>
 
 	<div class="entry-content">
-		<?php the_content(); ?>
 		<?php
-			wp_link_pages( array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'daphnee' ),
-				'after'  => '</div>',
-			) );
+		/**
+		 * The entry content
+		 */
+		Daphnee()->template->content_main( 'singular', 'page' );
 		?>
 	</div><!-- .entry-content -->
 
 	<footer class="entry-footer">
-		<?php edit_post_link( esc_html__( 'Edit', 'daphnee' ), '<span class="edit-link">', '</span>' ); ?>
+		<?php
+		/**
+		 * The entry footer
+		 */
+		Daphnee()->template->content_main( 'singular', get_post_type() );
+		?>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-## -->
-

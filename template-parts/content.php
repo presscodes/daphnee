@@ -8,34 +8,29 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="entry-header">
-		<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
 
-		<?php if ( 'post' == get_post_type() ) : ?>
-		<div class="entry-meta">
-			<?php daphnee_posted_on(); ?>
-		</div><!-- .entry-meta -->
-		<?php endif; ?>
-	</header><!-- .entry-header -->
+	<?php
+	/**
+	 * The entry header
+	 */
+	Daphnee()->template->content_header( 'archive', get_post_type() );
+	?>
 
 	<div class="entry-content">
-		<?php
-			the_content( sprintf(
-				/* translators: %s: Name of current post. */
-				wp_kses( __( 'Continue reading %s <span class="meta-nav">&rarr;</span>', 'daphnee' ), array( 'span' => array( 'class' => array() ) ) ),
-				the_title( '<span class="screen-reader-text">"', '"</span>', false )
-			) );
-		?>
-
-		<?php
-			wp_link_pages( array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'daphnee' ),
-				'after'  => '</div>',
-			) );
-		?>
+	<?php
+	/**
+	 * The entry content
+	 */
+	Daphnee()->template->content_main( 'archive', get_post_type() );
+	?>
 	</div><!-- .entry-content -->
 
 	<footer class="entry-footer">
-		<?php daphnee_entry_footer(); ?>
+		<?php
+		/**
+		 * The entry footer
+		 */
+		Daphnee()->template->content_main( 'archive', get_post_type() );
+		?>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-## -->
