@@ -323,27 +323,47 @@ if ( class_exists( 'Kirki' ) ) {
 	/*******************************
 	 * COLORS
 	 ******************************/
+	 Kirki::add_field( 'daphnee', array(
+ 		'type'        => 'color',
+ 		'settings'    => 'links_color',
+ 		'label'       => __( 'Links Color', 'daphnee' ),
+ 		'description' => __( 'Select the main color for your site\s links', 'daphnee' ),
+ 		'default'     => '#00BCD4',
+ 		'section'     => 'colors',
+ 		'output'      => array(
+ 			array(
+ 				'element'  => 'a, a:visited, a:hover',
+ 				'property' => 'color',
+ 			),
+ 		),
+ 		'transport'   => 'postMessage',
+ 		'js_vars'     => array(
+ 			array(
+ 				'element'  => 'a, a:visited, a:hover',
+ 				'function' => 'css',
+ 				'property' => 'color',
+ 			)
+ 		)
+ 	) );
+
 	Kirki::add_field( 'daphnee', array(
 		'type'        => 'color',
-		'settings'    => 'links_color',
-		'label'       => __( 'Links Color', 'daphnee' ),
-		'description' => __( 'Select the main color for your site\s links', 'daphnee' ),
-		'default'     => '#00BCD4',
+		'settings'    => 'buttons_color',
+		'label'       => __( 'Buttons Color', 'daphnee' ),
+		'description' => __( 'Select the main color for buttons', 'daphnee' ),
+		'default'     => '#C2185B',
 		'section'     => 'colors',
 		'output'      => array(
 			array(
-				'element'  => 'a, a:visited, a:hover',
-				'property' => 'color',
+				'element'  => 'button, input[type="button"], input[type="reset"], input[type="submit"]',
+				'property' => 'background-color',
+			),
+			array(
+				'element'           => 'button, input[type="button"], input[type="reset"], input[type="submit"]',
+				'property'          => 'color',
+				'sanitize_callback' => 'daphnee_max_readability',
 			),
 		),
-		'transport'   => 'postMessage',
-		'js_vars'     => array(
-			array(
-				'element'  => 'a, a:visited, a:hover',
-				'function' => 'css',
-				'property' => 'color',
-			)
-		)
 	) );
 
 }
@@ -370,4 +390,11 @@ function daphnee_h5_sanitize_size( $value ) {
 
 function daphnee_h6_sanitize_size( $value ) {
 	return ( .67 * $value );
+}
+
+function daphnee_max_readability( $value ) {
+	$lumosity_difference_to_white = Kirki_Color::lumosity_difference( $value, '#ffffff' );
+	$lumosity_difference_to_black = Kirki_Color::lumosity_difference( $value, '#333333' );
+
+	return ( $lumosity_difference_to_black > $lumosity_difference_to_white ) ? '#333333' : '#ffffff';
 }
