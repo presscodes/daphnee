@@ -18,8 +18,12 @@ class Daphnee {
 	}
 
 	public function load_template_partial( $template_part ) {
+		$template = apply_filters( 'daphnee/template/' . $template_part, get_template_directory() . '/partials/' . $template_part . '.php' );
+		if ( ! $template ) {
+			return;
+		}
 		ob_start();
-		load_template( apply_filters( 'daphnee/template/' . $template_part, get_template_directory() . '/partials/' . $template_part . '.php' ) );
+		load_template( $template );
 		echo ob_get_clean();
 	}
 }
