@@ -92,9 +92,11 @@ if ( class_exists( 'Kirki' ) ) {
 			'step' => 1
 		),
 		'output'      => array(
-			'element'  => '#content.row',
-			'property' => 'max-width',
-			'units'    => 'px',
+			array(
+				'element'  => '#content.row',
+				'property' => 'max-width',
+				'units'    => 'px',
+			),
 		),
 		'transport' => 'postMessage',
 		'js_vars'   => array(
@@ -163,9 +165,42 @@ if ( class_exists( 'Kirki' ) ) {
 			'step' => .01
 		),
 		'output'      => array(
-			'element'  => 'body',
-			'property' => 'font-size',
-			'units'    => 'em',
+			array(
+				'element'  => 'body',
+				'property' => 'font-size',
+				'units'    => 'em',
+			),
+		),
+		'transport' => 'postMessage',
+		'js_vars'   => array(
+	        array(
+	            'element'  => 'body',
+	            'function' => 'css',
+	            'property' => 'font-size',
+				'units'    => 'em',
+	        ),
+		),
+	) );
+
+	Kirki::add_field( 'daphnee', array(
+		'type'        => 'slider',
+		'settings'    => 'base_font_size_side',
+		'label'       => __( 'Sidebar Base Font Size', 'daphnee' ),
+		'description' => __( 'Select the base font-size for your site. (The value below is in em\'s)', 'dephnee' ),
+		'section'     => 'typography_base',
+		'default'     => .9,
+		'priority'    => 1,
+		'choices'     => array(
+			'min'  => .6,
+			'max'  => 3,
+			'step' => .01
+		),
+		'output'      => array(
+			array(
+				'element'  => 'body #secondary',
+				'property' => 'font-size',
+				'units'    => 'em',
+			),
 		),
 		'transport' => 'postMessage',
 		'js_vars'   => array(
@@ -202,9 +237,11 @@ if ( class_exists( 'Kirki' ) ) {
 	    'priority' => 22,
 	    'choices'  => Kirki_Fonts::get_google_font_subsets(),
 	    'output' => array(
-	        'element'  => 'body',
-	        'property' => 'font-subset',
-	    ),
+			array(
+		        'element'  => 'body',
+		        'property' => 'font-subset',
+		    ),
+		),
 	) );
 
 	Kirki::add_field( 'daphnee', array(
@@ -220,9 +257,11 @@ if ( class_exists( 'Kirki' ) ) {
 	        'step' => 100,
 	    ),
 	    'output' => array(
-	        'element'  => 'body',
-	        'property' => 'font-weight',
-	    ),
+			array(
+		        'element'  => 'body',
+		        'property' => 'font-weight',
+		    ),
+		),
 	) );
 
 	Kirki::add_field( 'daphnee', array(
@@ -277,6 +316,33 @@ if ( class_exists( 'Kirki' ) ) {
 			),
 		),
 	) );
+
+	/*******************************
+	 * COLORS
+	 ******************************/
+	Kirki::add_field( 'daphnee', array(
+		'type'        => 'color',
+		'settings'    => 'links_color',
+		'label'       => __( 'Links Color', 'daphnee' ),
+		'description' => __( 'Select the main color for your site\s links', 'daphnee' ),
+		'default'     => '#00BCD4',
+		'section'     => 'colors',
+		'output'      => array(
+			array(
+				'element'  => 'a, a:visited',
+				'property' => 'color',
+			),
+		),
+		'transport'   => 'postMessage',
+		'js_vars'     => array(
+			array(
+				'element'  => 'a, a:visited',
+				'function' => 'css',
+				'property' => 'color',
+			)
+		)
+	) );
+
 }
 
 function daphnee_h1_sanitize_size( $value ) {
