@@ -13,7 +13,7 @@
 	/**
 	 * The entry header
 	 */
-	Daphnee()->load_template_partial( 'content_header_archive' );
+	Daphnee()->load_template_partial( 'content-header-archive' );
 	?>
 
 	<div class="entry-content">
@@ -21,7 +21,7 @@
 	/**
 	 * The entry content
 	 */
-	Daphnee()->load_template_partial( 'content_main_archive' );
+	Daphnee()->load_template_partial( 'content-main-archive' );
 	?>
 	</div><!-- .entry-content -->
 
@@ -30,7 +30,7 @@
 		/**
 		 * The entry footer
 		 */
-		Daphnee()->load_template_partial( 'content_footer_archive' );
+		Daphnee()->load_template_partial( 'content-footer-archive' );
 		?>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-## -->
