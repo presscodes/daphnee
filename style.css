@@ -565,6 +565,36 @@ a {
 .widget_search .search-submit {
   display: none; }
 
+.widget.widget_recent_entries ul,
+.widget.widget_recent_comments ul,
+.widget.widget_archive ul,
+.widget.widget_categories ul,
+.widget.widget_meta ul {
+  padding: 0;
+  margin: 0; }
+  .widget.widget_recent_entries ul li,
+  .widget.widget_recent_comments ul li,
+  .widget.widget_archive ul li,
+  .widget.widget_categories ul li,
+  .widget.widget_meta ul li {
+    padding: .25em 0;
+    margin: 0;
+    list-style: none;
+    list-style-type: none;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1); }
+    .widget.widget_recent_entries ul li a,
+    .widget.widget_recent_comments ul li a,
+    .widget.widget_archive ul li a,
+    .widget.widget_categories ul li a,
+    .widget.widget_meta ul li a {
+      text-decoration: none; }
+    .widget.widget_recent_entries ul li:last-child,
+    .widget.widget_recent_comments ul li:last-child,
+    .widget.widget_archive ul li:last-child,
+    .widget.widget_categories ul li:last-child,
+    .widget.widget_meta ul li:last-child {
+      border-bottom: none; }
+
 /*--------------------------------------------------------------
 # Content
 --------------------------------------------------------------*/

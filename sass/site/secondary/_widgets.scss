@@ -11,3 +11,27 @@
 .widget_search .search-submit {
 	display: none;
 }
+
+.widget.widget_recent_entries,
+.widget.widget_recent_comments,
+.widget.widget_archive,
+.widget.widget_categories,
+.widget.widget_meta {
+	ul {
+		padding: 0;
+		margin: 0;
+		li {
+			padding: .25em 0;
+			margin: 0;
+			list-style: none;
+			list-style-type: none;
+			border-bottom: 1px dashed rgba( 0,0,0,0.1);
+			a{
+				text-decoration: none;
+			}
+			&:last-child {
+				border-bottom: none;
+			}
+		}
+	}
+}
