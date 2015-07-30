@@ -15,14 +15,14 @@
 	/**
 	 * The entry header
 	 */
-	Daphnee()->template->content_header( '404' );
+	Daphnee()->load_template_partial( 'content-header-404' );
 	?>
 	<div class="page-content">
 		<?php
 		/**
 		 * The entry content
 		 */
-		Daphnee()->template->content_main( '404' );
+		Daphnee()->load_template_partial( 'content-main-404' );
 		?>
 	</div><!-- .page-content -->
 </section><!-- .no-results -->

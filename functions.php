@@ -150,7 +150,6 @@ require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/jetpack.php';
 
 require get_template_directory() . '/inc/classes/class-daphnee.php';
-require get_template_directory() . '/inc/classes/class-daphnee-template.php';
 require get_template_directory() . '/inc/classes/class-daphnee-layout.php';
 
 function Daphnee() {

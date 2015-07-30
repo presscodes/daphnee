@@ -13,7 +13,7 @@
 /**
  * The <head>
  */
-Daphnee()->template->head();
+Daphnee()->load_template_partial( 'head' );
 ?>
 
 <body <?php body_class(); ?>>
@@ -24,7 +24,7 @@ Daphnee()->template->head();
 	/**
 	 * The global site header
 	 */
-	Daphnee()->template->header();
+	Daphnee()->load_template_partial( 'header' );
 	?>
 
 	<div id="content" class="site-content row">

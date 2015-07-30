@@ -14,4 +14,4 @@ if ( ! is_active_sidebar( 'sidebar-1' ) ) {
 /**
  * The sidebar
  */
-Daphnee()->template->sidebar();
+Daphnee()->load_template_partial( 'sidebar' );

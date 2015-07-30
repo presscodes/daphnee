@@ -4,7 +4,6 @@ class Daphnee {
 
 	private static $instance = null;
 
-	public $template;
 	public $layout;
 
 	public static function get_instance() {
@@ -15,7 +14,12 @@ class Daphnee {
 	}
 
 	public function __construct() {
-		$this->template = new Daphnee_Template();
 		$this->layout   = new Daphnee_Layout();
+	}
+
+	public function load_template_partial( $template_part ) {
+		ob_start();
+		load_template( apply_filters( 'daphnee/template/' . $template_part, get_template_directory() . '/partials/' . $template_part . '.php' ) );
+		echo ob_get_clean();
 	}
 }

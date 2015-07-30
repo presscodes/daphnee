@@ -12,14 +12,14 @@
 	/**
 	 * The entry header
 	 */
-	Daphnee()->template->content_header( 'singular', get_post_type() );
+	Daphnee()->load_template_partial( 'content_header_singular_post' );
 	?>
 	<div class="entry-content">
 		<?php
 		/**
 		 * The entry content
 		 */
-		Daphnee()->template->content_main( 'singular', get_post_type() );
+		Daphnee()->load_template_partial( 'content_main_singular_post' );
 		?>
 	</div><!-- .entry-content -->
 
@@ -28,7 +28,7 @@
 		/**
 		 * The entry footer
 		 */
-		Daphnee()->template->content_main( 'singular', get_post_type() );
+		Daphnee()->load_template_partial( 'content_footer_singular_post' );
 		?>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-## -->

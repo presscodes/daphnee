@@ -14,7 +14,7 @@
 	/**
 	 * The footer
 	 */
-	Daphnee()->template->footer();
+	Daphnee()->load_template_partial( 'footer' );
 	?>
 
 </div><!-- #page -->
