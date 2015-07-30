@@ -55,12 +55,13 @@ if ( class_exists( 'Kirki' ) ) {
 		'option_type' => 'theme_mod',
 	) );
 
-	/**
-	 * Add the "layout" section
-	 */
+	/*******************************
+	 * LAYOUT SECTION & OPTIONS
+	 ******************************/
 	Kirki::add_section( 'layout', array(
 		'title'       => __( 'Layout', 'daphnee' ),
 		'description' => __( 'Configure your layout options' ),
+		'priority'    => 10,
 	) );
 
 	Kirki::add_field( 'daphnee', array(
@@ -127,4 +128,177 @@ if ( class_exists( 'Kirki' ) ) {
 		)
 	) );
 
+	/*******************************
+	 * TYPOGRAPHY PANEL, SECTION & OPTIONS
+	 ******************************/
+	Kirki::add_panel( 'typography', array(
+		'priority' => 11,
+		'title'       => __( 'Typography', 'daphnee' ),
+		'description' => __( 'Typography options for this site', 'daphnee' ),
+	) );
+
+	Kirki::add_section( 'typography_base', array(
+		'title'       => __( 'Base Typography', 'daphnee' ),
+		'description' => __( 'Edit the global typography options for your site', 'dephnee' ),
+		'panel'       => 'typography',
+	) );
+
+	Kirki::add_section( 'typography_headers', array(
+		'title'       => __( 'Headers Typography', 'daphnee' ),
+		'description' => __( 'Edit the headers typography options for your site', 'dephnee' ),
+		'panel'       => 'typography',
+	) );
+
+	Kirki::add_field( 'daphnee', array(
+		'type'        => 'slider',
+		'settings'    => 'base_font_size',
+		'label'       => __( 'Font Size', 'daphnee' ),
+		'description' => __( 'Select the base font-size for your site. (The value below is in em\'s)', 'dephnee' ),
+		'section'     => 'typography_base',
+		'default'     => 1,
+		'priority'    => 1,
+		'choices'     => array(
+			'min'  => .6,
+			'max'  => 3,
+			'step' => .01
+		),
+		'output'      => array(
+			'element'  => 'body',
+			'property' => 'font-size',
+			'units'    => 'em',
+		),
+		'transport' => 'postMessage',
+		'js_vars'   => array(
+	        array(
+	            'element'  => 'body',
+	            'function' => 'css',
+	            'property' => 'font-size',
+				'units'    => 'em',
+	        ),
+		),
+	) );
+
+	Kirki::add_field( 'daphnee', array(
+	    'type'     => 'select2',
+	    'settings'  => 'base_font_family',
+	    'label'    => __( 'Font Family', 'daphnee' ),
+	    'section'  => 'typography_base',
+	    'default'  => 'Roboto',
+	    'priority' => 20,
+	    'choices'  => Kirki_Fonts::get_font_choices(),
+	    'output' => array(
+	        'element'  => 'body',
+	        'property' => 'font-family',
+	    ),
+	) );
+
+	Kirki::add_field( 'daphnee', array(
+	    'type'     => 'multicheck',
+	    'settings'  => 'base_font_subsets',
+	    'label'    => __( 'Google-Font subsets', 'daphnee' ),
+	    'description' => __( 'The subsets used from Google\'s API.', 'daphnee' ),
+	    'section'  => 'typography_base',
+	    'default'  => 'all',
+	    'priority' => 22,
+	    'choices'  => Kirki_Fonts::get_google_font_subsets(),
+	    'output' => array(
+	        'element'  => 'body',
+	        'property' => 'font-subset',
+	    ),
+	) );
+
+	Kirki::add_field( 'daphnee', array(
+	    'type'     => 'slider',
+	    'settings'  => 'base_typography_font_weight',
+	    'label'    => __( 'Font Weight', 'daphnee' ),
+	    'section'  => 'typography_base',
+	    'default'  => 300,
+	    'priority' => 24,
+	    'choices'  => array(
+	        'min'  => 100,
+	        'max'  => 900,
+	        'step' => 100,
+	    ),
+	    'output' => array(
+	        'element'  => 'body',
+	        'property' => 'font-weight',
+	    ),
+	) );
+
+	Kirki::add_field( 'daphnee', array(
+		'type'        => 'slider',
+		'settings'    => 'headers_font_size',
+		'label'       => __( 'Font Size', 'daphnee' ),
+		'description' => __( 'Select the base font-size for your site. This is the font-size of <h4> elements. The others are automatically calculated based on this value (the value below is in em\'s)', 'dephnee' ),
+		'section'     => 'typography_headers',
+		'default'     => 1,
+		'priority'    => 1,
+		'choices'     => array(
+			'min'  => .6,
+			'max'  => 3,
+			'step' => .01
+		),
+		'output'      => array(
+			array(
+				'element'           => 'h1',
+				'property'          => 'font-size',
+				'units'             => 'em',
+				'sanitize_callback' => 'daphnee_h1_sanitize_size'
+			),
+			array(
+				'element'           => 'h2',
+				'property'          => 'font-size',
+				'units'             => 'em',
+				'sanitize_callback' => 'daphnee_h2_sanitize_size'
+			),
+			array(
+				'element'           => 'h3',
+				'property'          => 'font-size',
+				'units'             => 'em',
+				'sanitize_callback' => 'daphnee_h3_sanitize_size'
+			),
+			array(
+				'element'           => 'h4',
+				'property'          => 'font-size',
+				'units'             => 'em',
+				'sanitize_callback' => 'daphnee_h4_sanitize_size'
+			),
+			array(
+				'element'           => 'h5',
+				'property'          => 'font-size',
+				'units'             => 'em',
+				'sanitize_callback' => 'daphnee_h5_sanitize_size'
+			),
+			array(
+				'element'           => 'h6',
+				'property'          => 'font-size',
+				'units'             => 'em',
+				'sanitize_callback' => 'daphnee_h6_sanitize_size'
+			),
+		),
+	) );
+}
+
+function daphnee_h1_sanitize_size( $value ) {
+	return ( 2 * $value );
+}
+
+function daphnee_h2_sanitize_size( $value ) {
+	return ( 1.5 * $value );
+}
+
+function daphnee_h3_sanitize_size( $value ) {
+	return ( 1.17 * $value );
+}
+
+function daphnee_h4_sanitize_size( $value ) {
+	return ( 1 * $value );
+}
+
+function daphnee_h5_sanitize_size( $value ) {
+	return ( .83 * $value );
+}
+
+function daphnee_h6_sanitize_size( $value ) {
+	return ( .67 * $value );
 }
