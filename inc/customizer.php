@@ -94,7 +94,16 @@ if ( class_exists( 'Kirki' ) ) {
 			'element'  => '#content.row',
 			'property' => 'max-width',
 			'units'    => 'px',
-		)
+		),
+		'transport' => 'postMessage',
+		'js_vars'   => array(
+	        array(
+	            'element'  => '#content.row',
+	            'function' => 'css',
+	            'property' => 'max-width',
+				'units'    => 'px',
+	        ),
+		),
 	) );
 
 	Kirki::add_field( 'daphnee', array(
