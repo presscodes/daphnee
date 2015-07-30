@@ -37,6 +37,9 @@ function daphnee_customizer_css() { ?>
 		width: 100%;
 		height: auto;
 	}
+	.customize-control-slider input[type="text"] {
+		background: transparent;
+	}
 	</style>
 	<?php
 }
