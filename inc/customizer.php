@@ -96,7 +96,7 @@ if ( class_exists( 'Kirki' ) ) {
 		),
 		'output'      => array(
 			array(
-				'element'  => '#content.row',
+				'element'  => '#content.row, #masthead .row',
 				'property' => 'max-width',
 				'units'    => 'px',
 			),
@@ -104,7 +104,7 @@ if ( class_exists( 'Kirki' ) ) {
 		'transport' => 'postMessage',
 		'js_vars'   => array(
 	        array(
-	            'element'  => '#content.row',
+	            'element'  => '#content.row, #masthead .row',
 	            'function' => 'css',
 	            'property' => 'max-width',
 				'units'    => 'px',

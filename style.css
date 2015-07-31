@@ -334,6 +334,20 @@ table {
   margin: 0 0 1.5em;
   width: 100%; }
 
+#masthead {
+  -webkit-box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1); }
+  #masthead .row {
+    padding-top: 0;
+    padding-bottom: 0; }
+  #masthead .site-title {
+    margin: 0; }
+    #masthead .site-title a {
+      text-decoration: none; }
+  #masthead .site-description {
+    font-size: .85em;
+    margin: 0; }
+
 /*--------------------------------------------------------------
 # Forms
 --------------------------------------------------------------*/
@@ -432,16 +446,16 @@ a {
       box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
       float: left;
       position: absolute;
-      top: 1.5em;
+      top: 2.5em;
       left: -999em;
-      z-index: 99999; }
+      z-index: 99999;
+      background: #fff;
+      min-width: 250px; }
       .main-navigation ul ul ul {
         left: -999em;
         top: 0; }
       .main-navigation ul ul li:hover > ul, .main-navigation ul ul li.focus > ul {
         left: 100%; }
-      .main-navigation ul ul a {
-        width: 200px; }
     .main-navigation ul li:hover > ul,
     .main-navigation ul li.focus > ul {
       left: auto; }
@@ -450,7 +464,8 @@ a {
     position: relative; }
   .main-navigation a {
     display: block;
-    text-decoration: none; }
+    text-decoration: none;
+    padding: .5em 1em; }
 
 /* Small menu. */
 .menu-toggle,

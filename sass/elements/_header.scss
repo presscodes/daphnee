@@ -1,0 +1,22 @@
+#masthead {
+    -webkit-box-shadow: 0 4px 4px 0 rgba(0,0,0,.1);
+    box-shadow: 0 4px 4px 0 rgba(0,0,0,.1);
+
+    .row {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .site-title {
+        margin: 0;
+
+        a {
+            text-decoration: none;
+        }
+    }
+
+    .site-description {
+        font-size: .85em;
+        margin: 0;
+    }
+}
