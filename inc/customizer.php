@@ -40,6 +40,14 @@ function daphnee_customizer_css() { ?>
 	.customize-control-slider input[type="text"] {
 		background: transparent;
 	}
+	a.daphnee-plus-link {
+		font-size: 10px;
+		text-transform: uppercase;
+		color: #fff;
+		padding: 2px 10px;
+		background: red;
+		margin-left: 5px;
+	}
 	</style>
 	<?php
 }
@@ -398,3 +406,12 @@ function daphnee_max_readability( $value ) {
 
 	return ( $lumosity_difference_to_black > $lumosity_difference_to_white ) ? '#333333' : '#ffffff';
 }
+
+function daphnee_add_plus_link() {
+	if ( ! Daphnee()->is_plus ) {
+		$link   = '<a class="daphnee-plus-link" target="_blank" href="' . Daphnee()->plus_link . '">' . __( 'Upgrade to Plus', 'daphnee' ) . '</a>';
+		$script = '$(\'' . $link . '\').appendTo( "li#accordion-section-themes .accordion-section-title" )';
+		echo '<script>jQuery(document).ready(function($) { "use strict"; ' . $script . '});</script>';
+	}
+}
+add_action( 'customize_controls_print_footer_scripts', 'daphnee_add_plus_link' );
