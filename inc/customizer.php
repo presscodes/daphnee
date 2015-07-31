@@ -328,6 +328,17 @@ if ( class_exists( 'Kirki' ) ) {
 		),
 	) );
 
+	if ( ! Daphnee()->is_plus ) {
+		Kirki::add_field( 'daphnee', array(
+			'type'        => 'custom',
+			'settings'    => 'headers_typography_plus',
+			'label'       => '',
+			'section'     => 'typography_headers',
+			'default'     => '<div style="border: 1px solid rgba(0,0,0,.2);padding: 20px;"><h3>' . __( 'Plus Options', 'daphnee' ) . '</h3><p>' . __( '<a href="https://presscodes.com" target="_blank">Upgrade to Daphnee Plus now</a> to get extra options for headers typography: Font family, separate font-size & font-weight per header (h1, h2, h3, h4, h5 & h6)', 'daphnee' ) . '</p></div>',
+			'priority'    => 99,
+		) );
+	}
+
 	/*******************************
 	 * COLORS
 	 ******************************/
