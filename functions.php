@@ -124,6 +124,14 @@ function daphnee_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'daphnee_scripts' );
 
+require get_template_directory() . '/inc/kirki/kirki.php';
+require get_template_directory() . '/inc/classes/class-daphnee.php';
+require get_template_directory() . '/inc/classes/class-daphnee-layout.php';
+
+function Daphnee() {
+	return Daphnee::get_instance();
+}
+
 /**
  * Implement the Custom Header feature.
  */
@@ -148,11 +156,3 @@ require get_template_directory() . '/inc/customizer.php';
  * Load Jetpack compatibility file.
  */
 require get_template_directory() . '/inc/jetpack.php';
-
-require get_template_directory() . '/inc/kirki/kirki.php';
-require get_template_directory() . '/inc/classes/class-daphnee.php';
-require get_template_directory() . '/inc/classes/class-daphnee-layout.php';
-
-function Daphnee() {
-	return Daphnee::get_instance();
-}
