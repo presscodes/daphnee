@@ -1,3 +1,2 @@
-<?php
-
-daphnee_entry_footer();
+<?php daphnee_entry_footer(); ?>
+<hr class="separator">

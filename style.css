@@ -235,6 +235,10 @@ textarea {
   font-size: 1rem;
   line-height: 1.5; }
 
+.entry-footer,
+.entry-meta {
+  font-size: .85em; }
+
 h1, h2, h3, h4, h5, h6 {
   clear: both; }
 
@@ -867,5 +871,3 @@ object {
 
 .gallery-caption {
   display: block; }
-
-/*# sourceMappingURL=style.css.map */

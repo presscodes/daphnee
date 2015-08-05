@@ -9,6 +9,10 @@ textarea {
 	line-height: $font__line-height-body;
 }
 
+.entry-footer,
+.entry-meta {
+	font-size: .85em;
+}
 @import "headings";
 
 @import "copy";
