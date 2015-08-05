@@ -177,7 +177,7 @@ if ( class_exists( 'Kirki' ) ) {
 		),
 		'output'      => array(
 			array(
-				'element'  => 'body',
+				'element'  => 'body #primary, header#masthead',
 				'property' => 'font-size',
 				'units'    => 'em',
 			),
@@ -185,7 +185,7 @@ if ( class_exists( 'Kirki' ) ) {
 		'transport' => 'postMessage',
 		'js_vars'   => array(
 	        array(
-	            'element'  => 'body',
+	            'element'  => 'body #primary, header#masthead',
 	            'function' => 'css',
 	            'property' => 'font-size',
 				'units'    => 'em',
@@ -216,7 +216,7 @@ if ( class_exists( 'Kirki' ) ) {
 		'transport' => 'postMessage',
 		'js_vars'   => array(
 	        array(
-	            'element'  => 'body',
+	            'element'  => 'body #secondary',
 	            'function' => 'css',
 	            'property' => 'font-size',
 				'units'    => 'em',
