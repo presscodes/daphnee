@@ -1,0 +1,24 @@
+{
+  "name": "daphnee",
+  "version": "1.0.0",
+  "author": "PressCodes Team",
+  "homepage": "https://press.codes",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/presscodes/daphnee"
+  },
+  "bugs": {
+    "url" : "https://github.com/presscodes/daphnee/issues"
+  },
+  "licenses": [{
+    "type": "GPL v2",
+    "url": "http://www.gnu.org/licenses/gpl-2.0.html"
+  }],
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-sass": "~0.9.0"
+  }
+}
