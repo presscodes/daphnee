@@ -26,7 +26,7 @@ class Daphnee {
 		if ( ! $template ) {
 			return;
 		}
-		load_template( $template );
+		load_template( $template, false );
 	}
 
 	public function is_plus() {
