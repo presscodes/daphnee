@@ -67,7 +67,8 @@ function daphnee_header_style() {
 		else :
 	?>
 		.site-title a,
-		.site-description {
+		.site-description,
+		header nav#site-navigation a {
 			color: #<?php echo esc_attr( $header_text_color ); ?>;
 		}
 	<?php endif; ?>
