@@ -648,6 +648,14 @@ function daphnee_max_readability( $value ) {
 	return ( $lumosity_difference_to_black > $lumosity_difference_to_white ) ? '#333333' : '#ffffff';
 }
 
+function daphnee_extra_footer_css() {
+	if ( '#ffffff' == daphnee_max_readability( get_theme_mod( 'footer_background_color', '#333333' ) ) ) {
+		$style = '#colophon.site-footer{color:#fff;}#colophon.site-footer a{color:rgba(255,255,255,.8);}';
+		wp_add_inline_style( 'daphnee-style', $style );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'daphnee_extra_footer_css' );
+
 function daphnee_add_plus_link() {
 	if ( ! Daphnee()->is_plus ) {
 		$link   = '<a class="daphnee-plus-link" target="_blank" href="' . Daphnee()->plus_link . '">' . __( 'Upgrade to Plus', 'daphnee' ) . '</a>';
