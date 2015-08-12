@@ -598,6 +598,23 @@ if ( class_exists( 'Kirki' ) ) {
 		),
 	) );
 
+	Kirki::add_field( 'daphnee', array(
+		'type'        => 'background',
+		'settings'    => 'footer_background',
+		'label'       => __( 'Footer Background', 'daphnee' ),
+		'section'     => 'footer',
+		'default'     => array(
+			'color'    => '#333333',
+			'image'    => '',
+			'repeat'   => 'no-repeat',
+			'size'     => 'cover',
+			'attach'   => 'fixed',
+			'position' => 'center-center',
+		),
+		'priority'    => 50,
+		'output'      => '#colophon.site-footer',
+	) );
+
 }
 
 function daphnee_h1_sanitize_size( $value ) {
