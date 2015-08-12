@@ -615,6 +615,17 @@ if ( class_exists( 'Kirki' ) ) {
 		'output'      => '#colophon.site-footer',
 	) );
 
+	if ( ! Daphnee()->is_plus ) {
+		Kirki::add_field( 'daphnee', array(
+			'type'        => 'custom',
+			'settings'    => 'remove_copyright',
+			'label'       => '',
+			'section'     => 'footer',
+			'default'     => '<div class="plus-info-control"><a class="daphnee-plus-link" target="_blank" href="' . Daphnee()->plus_link . '">' . __( 'Upgrade to Plus', 'daphnee' ) . '</a> and remove or edit the copyright link on your footer.</div>',
+			'priority'    => 55,
+		) );
+	}
+
 }
 
 function daphnee_h1_sanitize_size( $value ) {
