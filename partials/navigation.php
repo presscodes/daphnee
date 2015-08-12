@@ -1,4 +1,9 @@
-<nav id="site-navigation" class="main-navigation col_9" role="navigation">
-    <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'daphnee' ); ?></button>
-    <?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_id' => 'primary-menu' ) ); ?>
+<nav id="site-navigation" class="main-navigation mp-menu" role="navigation">
+  <?php wp_nav_menu( array( 
+  	'theme_location'  => 'primary', 
+  	'menu_id'         => 'primary-menu', 
+  	'container'       => 'div',
+		'container_class' => 'mp-level', 
+		'walker'          => new MultiLevel_Push_Menu_Walker
+	) ); ?>
 </nav><!-- #site-navigation -->
