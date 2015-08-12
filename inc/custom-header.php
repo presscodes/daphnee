@@ -26,8 +26,7 @@ function daphnee_custom_header_setup() {
 		'default-image'          => '',
 		'default-text-color'     => '000000',
 		'width'                  => 1000,
-		'height'                 => 250,
-		'flex-height'            => true,
+		'height'                 => 200,
 		'wp-head-callback'       => 'daphnee_header_style',
 		'admin-head-callback'    => 'daphnee_admin_header_style',
 		'admin-preview-callback' => 'daphnee_admin_header_image',
@@ -71,7 +70,11 @@ function daphnee_header_style() {
 		header nav#site-navigation a {
 			color: #<?php echo esc_attr( $header_text_color ); ?>;
 		}
-	<?php endif; ?>
+	<?php endif; 
+  if ( !empty( get_header_image() ) ) :
+  	echo '#masthead{ background-image: url("' . get_header_image() . '"); }';
+  endif; 
+	?>
 	</style>
 	<?php
 }

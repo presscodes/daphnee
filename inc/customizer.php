@@ -385,6 +385,106 @@ if ( class_exists( 'Kirki' ) ) {
 		),
 	) );
 
+	/*******************************
+	 * HEADER SECTION & OPTIONS
+	 ******************************/
+	Kirki::add_section( 'header', array(
+		'title'       => __( 'Header', 'daphnee' ),
+		'description' => __( 'Configure your header options' ),
+		'priority'    => 40,
+	) );
+
+	Kirki::add_field( 'daphnee', array(
+		'type'        => 'slider',
+		'settings'    => 'header_height',
+		'label'       => __( 'Header Height', 'daphnee' ),
+		'description' => __( 'Select the height for the header.', 'daphnee' ),
+		'section'     => 'header',
+		'default'     => 10,
+		'priority'    => 15,
+		'choices'     => array(
+			'min'  => 1,
+			'max'  => 100,
+			'step' => 1
+		),
+		'output'      => array(
+			array(
+				'element'  => '#masthead',
+				'property' => 'min-height',
+				'units'    => 'vh',
+			),
+		),
+		'transport' => 'postMessage',
+		'js_vars'   => array(
+      array(
+        'element'  => '#masthead',
+        'function' => 'css',
+        'property' => 'min-height',
+				'units'    => 'vh',
+	        ),
+		),
+	) );
+
+	/*******************************
+	* HEADER IMAGE OPTIONS
+	******************************/
+
+	Kirki::add_field( 'daphnee', array(
+		'type'        => 'color-alpha',
+		'settings'    => 'header_color',
+		'label'       => __( 'Header Color', 'daphnee' ),
+		'section'     => 'header_image',
+		'default'     => '#ffffff',
+		'priority'    => 10,
+		'output'      => array(
+			array(
+				'element'  => '#masthead',
+				'property' => 'background-color',
+				'units'    => '',
+			),
+		),
+		'transport'   => 'postMessage',
+		'js_vars'     => array(
+			array(
+				'element'  => '#masthead',
+				'function' => 'css',
+				'property' => 'background-color',
+				'units'    => '',
+			),
+		)
+	) );
+
+	Kirki::add_field( 'daphnee', array(
+    'type'     => 'select',
+    'settings' => 'header_image_repeat',
+    'label'    => __( 'Header Image Repeat', 'daphnee' ),
+    'section'  => 'header_image',
+    'default'  => 'no-repeat',
+    'priority' => 20,
+    'choices'  => array(
+    	'initial'   => __( 'Initial', 'daphnee' ),
+    	'inherit'   => __( 'Inherit', 'daphnee' ),
+    	'repeat'    => __( 'Repeat', 'daphnee' ),
+    	'no-repeat' => __( 'No repeat', 'daphnee' ),
+    	'repeat-x'  => __( 'Repeat-X', 'daphnee' ),
+    	'repeat-y'  => __( 'Repeat-Y', 'daphnee' ),
+    ),
+    'output' => array(
+      'element'  => '#masthead',
+      'property' => 'background-repeat',
+    ),
+    'transport'   => 'postMessage',
+		'js_vars'     => array(
+			array(
+				'element'  => '#masthead',
+				'function' => 'css',
+				'property' => 'background-repeat',
+			),
+		)
+	) );
+
+
+
 }
 
 function daphnee_h1_sanitize_size( $value ) {
