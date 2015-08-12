@@ -25,7 +25,9 @@ function daphnee_custom_header_setup() {
 	add_theme_support( 'custom-header', apply_filters( 'daphnee_custom_header_args', array(
 		'default-image'          => '',
 		'default-text-color'     => '000000',
+		'flex-width'             => true,
 		'width'                  => 1000,
+		'flex-height'            => true,
 		'height'                 => 200,
 		'wp-head-callback'       => 'daphnee_header_style',
 		'admin-head-callback'    => 'daphnee_admin_header_style',
