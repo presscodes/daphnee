@@ -13,7 +13,9 @@
 
 get_header(); ?>
 
+	<?php tha_content_before(); ?>
 	<div id="primary" class="content-area <?php echo Daphnee()->layout->main_content_columns(); ?>">
+		<?php tha_content_top(); ?>
 		<main id="main" class="site-main" role="main">
 
 		<?php if ( have_posts() ) : ?>
@@ -25,6 +27,7 @@ get_header(); ?>
 			<?php endif; ?>
 
 			<?php /* Start the Loop */ ?>
+			<?php tha_content_while_before(); ?>
 			<?php while ( have_posts() ) : the_post(); ?>
 
 				<?php
@@ -41,6 +44,8 @@ get_header(); ?>
 
 			<?php the_posts_navigation(); ?>
 
+			<?php tha_content_while_after(); ?>
+
 		<?php else : ?>
 
 			<?php get_template_part( 'template-parts/content', 'none' ); ?>
@@ -48,7 +53,13 @@ get_header(); ?>
 		<?php endif; ?>
 
 		</main><!-- #main -->
+		<?php tha_content_bottom(); ?>
 	</div><!-- #primary -->
+	<?php tha_content_after(); ?>
 
+<?php tha_sidebars_before(); ?>
 <?php get_sidebar(); ?>
+<?php tha_sidebars_after(); ?>
+<?php tha_footer_before(); ?>
 <?php get_footer(); ?>
+<?php tha_footer_after(); ?>

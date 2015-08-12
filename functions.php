@@ -156,3 +156,12 @@ require get_template_directory() . '/inc/customizer.php';
  * Load Jetpack compatibility file.
  */
 require get_template_directory() . '/inc/jetpack.php';
+
+/**
+ * Load tha theme hooks.
+ * https://github.com/zamoose/themehookalliance
+ */
+include( 'inc/tha-theme-hooks.php' );
+
+// Declare support for all hook types
+add_theme_support( 'tha_hooks', array( 'all' ) );

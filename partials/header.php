@@ -1,4 +1,6 @@
+<?php tha_header_before(); ?>
 <header id="masthead" class="site-header" role="banner">
+    <?php tha_header_top(); ?>
     <div class="row">
         <div class="site-branding col_3">
             <?php if ( is_front_page() && is_home() ) : ?>
@@ -15,4 +17,6 @@
         Daphnee()->load_template_partial( 'navigation' );
         ?>
     </div>
+    <?php tha_header_bottom(); ?>
 </header><!-- #masthead -->
+<?php tha_header_after(); ?>

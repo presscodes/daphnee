@@ -8,6 +8,7 @@
  */
 
 ?><!DOCTYPE html>
+<?php tha_html_before(); ?>
 <html <?php language_attributes(); ?>>
 <?php
 /**
@@ -17,6 +18,7 @@ Daphnee()->load_template_partial( 'head' );
 ?>
 
 <body <?php body_class(); ?>>
+<?php tha_body_top(); ?>
 <div id="page" class="hfeed site wrapper">
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'daphnee' ); ?></a>
 

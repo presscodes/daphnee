@@ -7,8 +7,12 @@
 
 get_header(); ?>
 
+	<?php tha_content_before(); ?>
 	<div id="primary" class="content-area <?php echo Daphnee()->layout->main_content_columns(); ?>">
+		<?php tha_content_top(); ?>
 		<main id="main" class="site-main" role="main">
+
+		<?php tha_content_while_before(); ?>
 
 		<?php while ( have_posts() ) : the_post(); ?>
 
@@ -25,8 +29,16 @@ get_header(); ?>
 
 		<?php endwhile; // End of the loop. ?>
 
-		</main><!-- #main -->
-	</div><!-- #primary -->
+		<?php tha_content_while_after(); ?>
 
+		</main><!-- #main -->
+		<?php tha_content_bottom(); ?>
+	</div><!-- #primary -->
+	<?php tha_content_after(); ?>
+
+<?php tha_sidebars_before(); ?>
 <?php get_sidebar(); ?>
+<?php tha_sidebars_after(); ?>
+<?php tha_footer_before(); ?>
 <?php get_footer(); ?>
+<?php tha_footer_after(); ?>
