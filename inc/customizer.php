@@ -71,7 +71,7 @@ if ( class_exists( 'Kirki' ) ) {
 	 ******************************/
 	Kirki::add_section( 'layout', array(
 		'title'       => __( 'Layout', 'daphnee' ),
-		'description' => __( 'Configure your layout options' ),
+		'description' => __( 'Configure your layout options', 'daphnee' ),
 		'priority'    => 10,
 	) );
 
@@ -483,7 +483,26 @@ if ( class_exists( 'Kirki' ) ) {
 		)
 	) );
 
+	/*******************************
+	 * FOOTER
+	 ******************************/
+	Kirki::add_section( 'footer', array(
+		'title'       => __( 'Footer', 'daphnee' ),
+		'priority'    => 80,
+	) );
 
+	Kirki::add_field( 'daphnee', array(
+		'type'     => 'slider',
+		'section'  => 'footer',
+		'settings' => 'footer_widget_areas',
+		'label'    => __( 'Number of Footer widget areas', 'daphnee' ),
+		'default'  => '3',
+		'choices'  => array(
+			'min'  => '1',
+			'max'  => '4',
+			'step' => '1',
+		),
+	) );
 
 }
 
