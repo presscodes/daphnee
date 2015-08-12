@@ -102,9 +102,22 @@ function daphnee_widgets_init() {
 		'description'   => '',
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</aside>',
-		'before_title'  => '<h2 class="widget-title">',
-		'after_title'   => '</h2>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
 	) );
+
+	$footer_widget_areas = get_theme_mod( 'footer_widget_areas' );
+	for ( $i = 1; $i <= $footer_widget_areas; $i++ ) {
+		register_sidebar( array(
+			'name'          => sprintf( esc_html__( 'Footer Widget Area %s', 'daphnee' ), $i ),
+			'id'            => 'footer-' . $i,
+			'description'   => '',
+			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</aside>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
+		) );
+	}
 }
 add_action( 'widgets_init', 'daphnee_widgets_init' );
 
