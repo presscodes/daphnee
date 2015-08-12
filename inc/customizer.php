@@ -425,7 +425,7 @@ if ( class_exists( 'Kirki' ) ) {
 		),
 	) );
 
-	
+
 	/*******************************
 	* HEADER IMAGE OPTIONS
 	******************************/
@@ -456,54 +456,58 @@ if ( class_exists( 'Kirki' ) ) {
 	) );
 
 	Kirki::add_field( 'daphnee', array(
-    'type'     => 'select',
-    'settings' => 'header_image_repeat',
-    'label'    => __( 'Header Image Repeat', 'daphnee' ),
-    'section'  => 'header_image',
-    'default'  => 'no-repeat',
-    'priority' => 20,
-    'choices'  => array(
-    	'initial'   => __( 'Initial', 'daphnee' ),
-    	'inherit'   => __( 'Inherit', 'daphnee' ),
-    	'repeat'    => __( 'Repeat', 'daphnee' ),
-    	'no-repeat' => __( 'No repeat', 'daphnee' ),
-    	'repeat-x'  => __( 'Repeat-X', 'daphnee' ),
-    	'repeat-y'  => __( 'Repeat-Y', 'daphnee' ),
-    ),
-    'output' => array(
-      'element'  => '#masthead',
-      'property' => 'background-repeat',
-    ),
-    'transport'   => 'postMessage',
-		'js_vars'     => array(
+		'type'      => 'select',
+		'settings'  => 'header_image_repeat',
+	    'label'     => __( 'Header Image Repeat', 'daphnee' ),
+	    'section'   => 'header_image',
+	    'default'   => 'no-repeat',
+	    'priority'  => 20,
+	    'choices'   => array(
+	    	'initial'   => __( 'Initial', 'daphnee' ),
+	    	'inherit'   => __( 'Inherit', 'daphnee' ),
+	    	'repeat'    => __( 'Repeat', 'daphnee' ),
+	    	'no-repeat' => __( 'No repeat', 'daphnee' ),
+	    	'repeat-x'  => __( 'Repeat-X', 'daphnee' ),
+	    	'repeat-y'  => __( 'Repeat-Y', 'daphnee' ),
+	    ),
+		'output'    => array(
+			array(
+				'element'  => '#masthead',
+				'property' => 'background-repeat',
+			),
+		),
+		'transport' => 'postMessage',
+		'js_vars'   => array(
 			array(
 				'element'  => '#masthead',
 				'function' => 'css',
 				'property' => 'background-repeat',
 			),
-		)
+		),
 	) );
 
 	Kirki::add_field( 'daphnee', array(
-    'type'     => 'select',
-    'settings' => 'header_image_size',
-    'label'    => __( 'Header Image Size', 'daphnee' ),
-    'section'  => 'header_image',
-    'default'  => 'cover',
-    'priority' => 30,
-    'choices'  => array(
-    	'initial'   => __( 'Initial', 'daphnee' ),
-    	'inherit'   => __( 'Inherit', 'daphnee' ),
-    	'cover'     => __( 'Cover', 'daphnee' ),
-    	'contain '  => __( 'Contain', 'daphnee' ),
-    	'auto'      => __( 'Auto', 'daphnee' ),
-    ),
-    'output' => array(
-      'element'  => '#masthead',
-      'property' => 'background-size',
-    ),
-    'transport'   => 'postMessage',
-		'js_vars'     => array(
+		'type'      => 'select',
+		'settings'  => 'header_image_size',
+		'label'     => __( 'Header Image Size', 'daphnee' ),
+		'section'   => 'header_image',
+		'default'   => 'cover',
+		'priority'  => 30,
+		'choices'   => array(
+			'initial'   => __( 'Initial', 'daphnee' ),
+	    	'inherit'   => __( 'Inherit', 'daphnee' ),
+	    	'cover'     => __( 'Cover', 'daphnee' ),
+	    	'contain '  => __( 'Contain', 'daphnee' ),
+	    	'auto'      => __( 'Auto', 'daphnee' ),
+    	),
+		'output' => array(
+			array(
+				'element'  => '#masthead',
+				'property' => 'background-size',
+			),
+		),
+		'transport' => 'postMessage',
+		'js_vars'   => array(
 			array(
 				'element'  => '#masthead',
 				'function' => 'css',
@@ -513,63 +517,65 @@ if ( class_exists( 'Kirki' ) ) {
 	) );
 
 	Kirki::add_field( 'daphnee', array(
-    'type'     => 'select',
-    'settings' => 'header_image_attach',
-    'label'    => __( 'Header Image Attachment', 'daphnee' ),
-    'section'  => 'header_image',
-    'default'  => 'scroll',
-    'priority' => 40,
-    'choices'  => array(
-    	'initial'   => __( 'Initial', 'daphnee' ),
-    	'inherit'   => __( 'Inherit', 'daphnee' ),
-    	'scroll'    => __( 'Scroll', 'daphnee' ),
-    	'fixed '    => __( 'Fixed', 'daphnee' ),
-    ),
-    'output' => array(
-      'element'  => '#masthead',
-      'property' => 'background-attachment',
-    ),
-    'transport'   => 'postMessage',
-		'js_vars'     => array(
+	    'type'      => 'select',
+	    'settings'  => 'header_image_attach',
+	    'label'     => __( 'Header Image Attachment', 'daphnee' ),
+	    'section'   => 'header_image',
+	    'default'   => 'scroll',
+	    'priority'  => 40,
+	    'choices'   => array(
+	    	'initial'   => __( 'Initial', 'daphnee' ),
+	    	'inherit'   => __( 'Inherit', 'daphnee' ),
+	    	'scroll'    => __( 'Scroll', 'daphnee' ),
+	    	'fixed '    => __( 'Fixed', 'daphnee' ),
+	    ),
+	    'output' => array(
+	      'element'  => '#masthead',
+	      'property' => 'background-attachment',
+	    ),
+	    'transport' => 'postMessage',
+		'js_vars'   => array(
 			array(
 				'element'  => '#masthead',
 				'function' => 'css',
 				'property' => 'background-attachment',
 			),
 		)
-	) );	
+	) );
 
-		Kirki::add_field( 'daphnee', array(
-    'type'     => 'select',
-    'settings' => 'header_image_position',
-    'label'    => __( 'Header Image Position', 'daphnee' ),
-    'section'  => 'header_image',
-    'default'  => 'center-center',
-    'priority' => 40,
-    'choices'  => array(
-    	'left-top'      => __( 'Left Top', 'daphnee' ),
-			'left-center'   => __( 'Left Center', 'daphnee' ),
-			'left-bottom'   => __( 'Left Bottom', 'daphnee' ),
-			'right-top'     => __( 'Right Top', 'daphnee' ),
-			'right-center'  => __( 'Right Center', 'daphnee' ),
-			'right-bottom'  => __( 'Right Bottom', 'daphnee' ),
-			'center-top'    => __( 'Center Top', 'daphnee' ),
-			'center-center' => __( 'Center Center', 'daphnee' ),
-			'center-bottom' => __( 'Center Bottom', 'daphnee' ),
-    ),
-    'output' => array(
-      'element'  => '#masthead',
-      'property' => 'background-position',
-    ),
-    'transport'   => 'postMessage',
-		'js_vars'     => array(
+	Kirki::add_field( 'daphnee', array(
+	    'type'      => 'select',
+	    'settings'  => 'header_image_position',
+	    'label'     => __( 'Header Image Position', 'daphnee' ),
+	    'section'   => 'header_image',
+	    'default'   => 'center-center',
+	    'priority'  => 40,
+	    'choices'   => array(
+	    	'left-top'      => __( 'Left Top', 'daphnee' ),
+				'left-center'   => __( 'Left Center', 'daphnee' ),
+				'left-bottom'   => __( 'Left Bottom', 'daphnee' ),
+				'right-top'     => __( 'Right Top', 'daphnee' ),
+				'right-center'  => __( 'Right Center', 'daphnee' ),
+				'right-bottom'  => __( 'Right Bottom', 'daphnee' ),
+				'center-top'    => __( 'Center Top', 'daphnee' ),
+				'center-center' => __( 'Center Center', 'daphnee' ),
+				'center-bottom' => __( 'Center Bottom', 'daphnee' ),
+	    ),
+	    'output'    => array(
+			array(
+				'element'  => '#masthead',
+				'property' => 'background-position',
+			),
+	    ),
+	    'transport' => 'postMessage',
+		'js_vars'   => array(
 			array(
 				'element'  => '#masthead',
 				'function' => 'css',
 				'property' => 'background-position',
 			),
 		)
-	) );	
+	) );
 
 	/*******************************
 	 * FOOTER
