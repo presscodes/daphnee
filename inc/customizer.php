@@ -48,6 +48,10 @@ function daphnee_customizer_css() { ?>
 		background: red;
 		margin-left: 5px;
 	}
+	.plus-info-control {
+		border: 1px solid rgba(0,0,0,.2);
+		padding: 20px;
+	}
 	</style>
 	<?php
 }
@@ -334,7 +338,7 @@ if ( class_exists( 'Kirki' ) ) {
 			'settings'    => 'headers_typography_plus',
 			'label'       => '',
 			'section'     => 'typography_headers',
-			'default'     => '<div style="border: 1px solid rgba(0,0,0,.2);padding: 20px;"><h3>' . __( 'Plus Options', 'daphnee' ) . '</h3><p>' . __( '<a href="https://presscodes.com" target="_blank">Upgrade to Daphnee Plus now</a> to get extra options for headers typography: Font family, separate font-size & font-weight per header (h1, h2, h3, h4, h5 & h6)', 'daphnee' ) . '</p></div>',
+			'default'     => '<div class="plus-info-control"><h3>' . __( 'Plus Options', 'daphnee' ) . '</h3><p><a class="daphnee-plus-link" target="_blank" href="' . Daphnee()->plus_link . '">' . __( 'Upgrade to Plus', 'daphnee' ) . '</a> ' . __( 'to get extra options for headers typography: Font family, separate font-size & font-weight per header (h1, h2, h3, h4, h5 & h6)', 'daphnee' ) . '</p></div>',
 			'priority'    => 99,
 		) );
 	}
@@ -416,15 +420,25 @@ if ( class_exists( 'Kirki' ) ) {
 		),
 		'transport' => 'postMessage',
 		'js_vars'   => array(
-      array(
-        'element'  => '#masthead',
-        'function' => 'css',
-        'property' => 'min-height',
+			array(
+				'element'  => '#masthead',
+				'function' => 'css',
+				'property' => 'min-height',
 				'units'    => 'vh',
-	        ),
+			),
 		),
 	) );
 
+	if ( ! Daphnee()->is_plus ) {
+		Kirki::add_field( 'daphnee', array(
+			'type'        => 'custom',
+			'settings'    => 'plus_headers_info',
+			'label'       => '',
+			'section'     => 'header',
+			'default'     => '<div class="plus-info-control"><h3>' . __( 'Plus Options', 'daphnee' ) . '</h3><p><a class="daphnee-plus-link" target="_blank" href="' . Daphnee()->plus_link . '">' . __( 'Upgrade to Plus', 'daphnee' ) . '</a> and choose from a variety of headers for your site!</p></div>',
+			'priority'    => 99,
+		) );
+	}
 
 	/*******************************
 	* HEADER IMAGE OPTIONS
@@ -621,7 +635,7 @@ if ( class_exists( 'Kirki' ) ) {
 			'settings'    => 'remove_copyright',
 			'label'       => '',
 			'section'     => 'footer',
-			'default'     => '<div class="plus-info-control"><a class="daphnee-plus-link" target="_blank" href="' . Daphnee()->plus_link . '">' . __( 'Upgrade to Plus', 'daphnee' ) . '</a> and remove or edit the copyright link on your footer.</div>',
+			'default'     => '<div class="plus-info-control"><h3>' . __( 'Plus Options', 'daphnee' ) . '</h3><p><a class="daphnee-plus-link" target="_blank" href="' . Daphnee()->plus_link . '">' . __( 'Upgrade to Plus', 'daphnee' ) . '</a> and remove or edit the copyright link on your footer.</p></div>',
 			'priority'    => 55,
 		) );
 	}
