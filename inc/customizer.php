@@ -692,10 +692,10 @@ function daphnee_h6_sanitize_size( $value ) {
 
 function daphnee_add_featured_image( $content ) {
 	global $post;
-	$enabled_post_types = get_theme_mod( 'featured_images', array( 'post' ) );
+	$enabled_post_types = get_theme_mod( 'featured_image_post_types', array( 'post' ) );
 	if ( is_singular() && in_array( $post->post_type, $enabled_post_types ) ) {
 		$content = get_the_post_thumbnail ( $post->ID, 'full' ) . $content;
-	}	
+	}
 	return $content;
 }
 add_filter( 'the_content', 'daphnee_add_featured_image' );
