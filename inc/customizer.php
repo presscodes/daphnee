@@ -640,6 +640,30 @@ if ( class_exists( 'Kirki' ) ) {
 		) );
 	}
 
+	/*******************************
+	 * FEATURED IMAGES
+	 ******************************/
+	Kirki::add_section( 'featured_images', array(
+		'title'       => __( 'Featured Images', 'daphnee' ),
+		'priority'    => 90,
+	) );
+
+	$post_types         = array();
+	$post_types_objects = get_post_types( array( 'public' => true ), 'objects' );
+	foreach ( $post_types_objects as $post_type ) {
+		$post_types[ $post_type->name ] = $post_type->labels->name;
+	}
+
+	Kirki::add_field( 'daphnee', array(
+		'type'        => 'multicheck',
+		'label'       => __( 'Enable featured images per post-type', 'daphnee' ),
+		'section'     => 'featured_images',
+		'settings'    => 'featured_image_post_types',
+		'description' => __( 'Please note that featured images will only be shown if the post type supports them and the post has a featured image.', 'daphnee' ),
+		'default'     => array( 'post' ),
+		'choices'     => $post_types
+	) );
+
 }
 
 function daphnee_h1_sanitize_size( $value ) {
@@ -665,6 +689,16 @@ function daphnee_h5_sanitize_size( $value ) {
 function daphnee_h6_sanitize_size( $value ) {
 	return ( .67 * $value );
 }
+
+function daphnee_add_featured_image( $content ) {
+	global $post;
+	$enabled_post_types = get_theme_mod( 'featured_images', array( 'post' ) );
+	if ( is_singular() && in_array( $post->post_type, $enabled_post_types ) ) {
+		$content = get_the_post_thumbnail ( $post->ID, 'full' ) . $content;
+	}	
+	return $content;
+}
+add_filter( 'the_content', 'daphnee_add_featured_image' );
 
 function daphnee_max_readability( $value ) {
 	$lumosity_difference_to_white = Kirki_Color::lumosity_difference( $value, '#ffffff' );
