@@ -26,38 +26,6 @@ function daphnee_customize_preview_js() {
 add_action( 'customize_preview_init', 'daphnee_customize_preview_js' );
 
 /**
- * Add some custom CSS to the customizer screen.
- */
-function daphnee_customizer_css() { ?>
-	<style>
-	#customize-control-layout.customize-control-radio-image .image.ui-buttonset label {
-		max-width: 29%;
-	}
-	#customize-control-layout.customize-control-radio-image .image.ui-buttonset label img {
-		width: 100%;
-		height: auto;
-	}
-	.customize-control-slider input[type="text"] {
-		background: transparent;
-	}
-	a.daphnee-plus-link {
-		font-size: 10px;
-		text-transform: uppercase;
-		color: #fff;
-		padding: 2px 10px;
-		background: red;
-		margin-left: 5px;
-	}
-	.plus-info-control {
-		border: 1px solid rgba(0,0,0,.2);
-		padding: 20px;
-	}
-	</style>
-	<?php
-}
-add_action( 'customize_controls_print_styles', 'daphnee_customizer_css' );
-
-/**
  * Check that Kirki exists before proceeding
  */
 if ( class_exists( 'Kirki' ) ) {
@@ -297,37 +265,37 @@ if ( class_exists( 'Kirki' ) ) {
 				'element'           => 'h1',
 				'property'          => 'font-size',
 				'units'             => 'em',
-				'sanitize_callback' => 'daphnee_h1_sanitize_size'
+				'sanitize_callback' => array( 'Daphnee_Customizer', 'h1_sanitize_size' ),
 			),
 			array(
 				'element'           => 'h2',
 				'property'          => 'font-size',
 				'units'             => 'em',
-				'sanitize_callback' => 'daphnee_h2_sanitize_size'
+				'sanitize_callback' => array( 'Daphnee_Customizer', 'h2_sanitize_size' ),
 			),
 			array(
 				'element'           => 'h3',
 				'property'          => 'font-size',
 				'units'             => 'em',
-				'sanitize_callback' => 'daphnee_h3_sanitize_size'
+				'sanitize_callback' => array( 'Daphnee_Customizer', 'h3_sanitize_size' ),
 			),
 			array(
 				'element'           => 'h4',
 				'property'          => 'font-size',
 				'units'             => 'em',
-				'sanitize_callback' => 'daphnee_h4_sanitize_size'
+				'sanitize_callback' => array( 'Daphnee_Customizer', 'h4_sanitize_size' ),
 			),
 			array(
 				'element'           => 'h5',
 				'property'          => 'font-size',
 				'units'             => 'em',
-				'sanitize_callback' => 'daphnee_h5_sanitize_size'
+				'sanitize_callback' => array( 'Daphnee_Customizer', 'h5_sanitize_size' ),
 			),
 			array(
 				'element'           => 'h6',
 				'property'          => 'font-size',
 				'units'             => 'em',
-				'sanitize_callback' => 'daphnee_h6_sanitize_size'
+				'sanitize_callback' => array( 'Daphnee_Customizer', 'h6_sanitize_size' ),
 			),
 		),
 	) );
@@ -338,7 +306,7 @@ if ( class_exists( 'Kirki' ) ) {
 			'settings'    => 'headers_typography_plus',
 			'label'       => '',
 			'section'     => 'typography_headers',
-			'default'     => '<div class="plus-info-control"><h3>' . __( 'Plus Options', 'daphnee' ) . '</h3><p><a class="daphnee-plus-link" target="_blank" href="' . Daphnee()->plus_link . '">' . __( 'Upgrade to Plus', 'daphnee' ) . '</a> ' . __( 'to get extra options for headers typography: Font family, separate font-size & font-weight per header (h1, h2, h3, h4, h5 & h6)', 'daphnee' ) . '</p></div>',
+			'default'     => Daphnee_Customizer::update_info_wrapper( __( 'Plus Options', 'daphnee' ), __( 'Get extra options for headers typography: Font family, separate font-size & font-weight per header (h1, h2, h3, h4, h5 & h6)', 'daphnee' ) ),
 			'priority'    => 99,
 		) );
 	}
@@ -384,7 +352,7 @@ if ( class_exists( 'Kirki' ) ) {
 			array(
 				'element'           => 'button, input[type="button"], input[type="reset"], input[type="submit"]',
 				'property'          => 'color',
-				'sanitize_callback' => 'daphnee_max_readability',
+				'sanitize_callback' => array( 'Daphnee_Customizer', 'max_readability' ),
 			),
 		),
 	) );
@@ -435,7 +403,7 @@ if ( class_exists( 'Kirki' ) ) {
 			'settings'    => 'plus_headers_info',
 			'label'       => '',
 			'section'     => 'header',
-			'default'     => '<div class="plus-info-control"><h3>' . __( 'Plus Options', 'daphnee' ) . '</h3><p><a class="daphnee-plus-link" target="_blank" href="' . Daphnee()->plus_link . '">' . __( 'Upgrade to Plus', 'daphnee' ) . '</a> and choose from a variety of headers for your site!</p></div>',
+			'default'     => Daphnee_Customizer::update_info_wrapper( __( 'Plus Options', 'daphnee' ), __( 'The plus pack includes many additional headers for your site!', 'Avada' ) ),
 			'priority'    => 99,
 		) );
 	}
@@ -666,30 +634,6 @@ if ( class_exists( 'Kirki' ) ) {
 
 }
 
-function daphnee_h1_sanitize_size( $value ) {
-	return ( 2 * $value );
-}
-
-function daphnee_h2_sanitize_size( $value ) {
-	return ( 1.5 * $value );
-}
-
-function daphnee_h3_sanitize_size( $value ) {
-	return ( 1.17 * $value );
-}
-
-function daphnee_h4_sanitize_size( $value ) {
-	return ( 1 * $value );
-}
-
-function daphnee_h5_sanitize_size( $value ) {
-	return ( .83 * $value );
-}
-
-function daphnee_h6_sanitize_size( $value ) {
-	return ( .67 * $value );
-}
-
 function daphnee_add_featured_image( $content ) {
 	global $post;
 	$enabled_post_types = get_theme_mod( 'featured_image_post_types', array( 'post' ) );
@@ -700,20 +644,6 @@ function daphnee_add_featured_image( $content ) {
 }
 add_filter( 'the_content', 'daphnee_add_featured_image' );
 
-function daphnee_max_readability( $value ) {
-	$lumosity_difference_to_white = Kirki_Color::lumosity_difference( $value, '#ffffff' );
-	$lumosity_difference_to_black = Kirki_Color::lumosity_difference( $value, '#333333' );
-
-	return ( $lumosity_difference_to_black > $lumosity_difference_to_white ) ? '#333333' : '#ffffff';
-}
-
-function daphnee_extra_footer_css() {
-	if ( '#ffffff' == daphnee_max_readability( get_theme_mod( 'footer_background_color', '#333333' ) ) ) {
-		$style = '#colophon.site-footer{color:#fff;}#colophon.site-footer a{color:rgba(255,255,255,.8);}';
-		wp_add_inline_style( 'daphnee-style', $style );
-	}
-}
-add_action( 'wp_enqueue_scripts', 'daphnee_extra_footer_css' );
 
 function daphnee_add_plus_link() {
 	if ( ! Daphnee()->is_plus ) {

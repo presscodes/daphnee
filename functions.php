@@ -140,10 +140,14 @@ add_action( 'wp_enqueue_scripts', 'daphnee_scripts' );
 require get_template_directory() . '/inc/kirki/kirki.php';
 require get_template_directory() . '/inc/classes/class-daphnee.php';
 require get_template_directory() . '/inc/classes/class-daphnee-layout.php';
+require get_template_directory() . '/inc/classes/class-daphnee-customizer.php';
+require get_template_directory() . '/inc/classes/class-daphnee-dynamic-css.php';
 
 function Daphnee() {
 	return Daphnee::get_instance();
 }
+$customizer  = new Daphnee_Customizer();
+$dynamic_css = new Daphnee_Dynamic_CSS();
 
 /**
  * Implement the Custom Header feature.
