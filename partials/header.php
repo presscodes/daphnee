@@ -1,5 +1,5 @@
 <?php tha_header_before(); ?>
-<header id="masthead" class="site-header" role="banner">
+<header id="masthead" class="site-header" role="banner"<?php echo ( get_header_image() ) ? ' style="background-image:url(' . esc_url( get_header_image() ) . ');"' : ''; ?>>
     <?php tha_header_top(); ?>
     <div class="row">
         <div class="site-branding col_4">
@@ -13,4 +13,4 @@
     </div>
     <?php tha_header_bottom(); ?>
 </header><!-- #masthead -->
-<?php tha_header_after(); ?>
+<?php tha_header_after();
