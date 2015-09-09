@@ -182,3 +182,8 @@ include( 'inc/tha-theme-hooks.php' );
 
 // Declare support for all hook types
 add_theme_support( 'tha_hooks', array( 'all' ) );
+
+/**
+ * Load custom navwalker.
+ */
+require get_template_directory() . '/inc/navwalker.php';

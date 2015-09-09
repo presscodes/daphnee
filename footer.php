@@ -9,14 +9,17 @@
 
 ?>
 
-	</div><!-- #content -->
-	<?php
-	/**
-	 * The footer
-	 */
-	Daphnee()->load_template_partial( 'footer' );
-	?>
+				</div><!-- #content -->
+				<?php
+				/**
+				 * The footer
+				 */
+				Daphnee()->load_template_partial( 'footer' );
+				?>
 
+			</div><!-- /scroller-inner -->
+		</div><!-- /scroller -->
+	</div><!-- #mp-pusher -->
 </div><!-- #page -->
 
 <?php tha_body_bottom(); ?>
