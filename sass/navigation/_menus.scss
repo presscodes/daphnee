@@ -111,4 +111,6 @@
 
 .show-menu #site-navigation.main-navigation {
 	display: block;
+	margin-left: 0;
+	z-index: 99999;
 }

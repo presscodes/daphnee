@@ -497,7 +497,9 @@ a {
   width: 50%; }
 
 .show-menu #site-navigation.main-navigation {
-  display: block; }
+  display: block;
+  margin-left: 0;
+  z-index: 99999; }
 
 /*--------------------------------------------------------------
 # Accessibility

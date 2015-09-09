@@ -1,10 +1,11 @@
-(function($) {
-	$(function() {
-		$( ".menu-toggle" ).click( function() {
-			$( "body" ).toggleClass( "show-menu" );
-		});
-		$( ".site-header, .site-content" ).click( function() {
-			$( "body" ).removeClass( "show-menu" );
-		});
+jQuery(document).ready(function($) {
+	$( '.menu-toggle' ).on('click', function(event) {
+		event.stopPropagation();
+		$( 'body' ).toggleClass( 'show-menu' );
 	});
-})(jQuery);
+	$( document ).on('click', function() {
+		if ( event.target.id != 'site-navigation' ) {
+			$( 'body' ).toggleClass( 'show-menu', false );	
+		}
+	});
+});
