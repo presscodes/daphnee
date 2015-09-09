@@ -145,7 +145,6 @@ require get_template_directory() . '/inc/classes/class-daphnee.php';
 require get_template_directory() . '/inc/classes/class-daphnee-layout.php';
 require get_template_directory() . '/inc/classes/class-daphnee-customizer.php';
 require get_template_directory() . '/inc/classes/class-daphnee-dynamic-css.php';
-require get_template_directory() . '/inc/classes/class-daphnee-social.php';
 
 function Daphnee() {
 	return Daphnee::get_instance();

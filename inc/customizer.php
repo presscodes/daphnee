@@ -48,17 +48,17 @@ if ( class_exists( 'Kirki' ) ) {
 	) );
 
 	Kirki::add_field( 'daphnee', array(
-	    'type'        => 'radio-image',
-	    'settings'    => 'layout',
-	    'label'       => __( 'Layout', 'daphnee' ),
-	    'section'     => 'layout',
-	    'default'     => '',
-	    'priority'    => 10,
-	    'choices'     => array(
-	        'full-screen'   => trailingslashit( get_template_directory_uri() ) . 'inc/kirki/assets/images/1c.png',
+		'type'        => 'radio-image',
+		'settings'    => 'layout',
+		'label'       => __( 'Layout', 'daphnee' ),
+		'section'     => 'layout',
+		'default'     => '',
+		'priority'    => 10,
+		'choices'     => array(
+			'full-screen'   => trailingslashit( get_template_directory_uri() ) . 'inc/kirki/assets/images/1c.png',
 			'left-sidebar'  => trailingslashit( get_template_directory_uri() ) . 'inc/kirki/assets/images/2cl.png',
 			'right-sidebar' => trailingslashit( get_template_directory_uri() ) . 'inc/kirki/assets/images/2cr.png',
-	    ),
+		),
 	) );
 
 	Kirki::add_field( 'daphnee', array(
@@ -83,12 +83,12 @@ if ( class_exists( 'Kirki' ) ) {
 		),
 		'transport' => 'postMessage',
 		'js_vars'   => array(
-	        array(
-	            'element'  => '#content.row, #masthead .row',
-	            'function' => 'css',
-	            'property' => 'max-width',
+			array(
+				'element'  => '#content.row, #masthead .row',
+				'function' => 'css',
+				'property' => 'max-width',
 				'units'    => 'px',
-	        ),
+			),
 		),
 	) );
 
@@ -156,12 +156,12 @@ if ( class_exists( 'Kirki' ) ) {
 		),
 		'transport' => 'postMessage',
 		'js_vars'   => array(
-	        array(
-	            'element'  => 'body #primary, header#masthead',
-	            'function' => 'css',
-	            'property' => 'font-size',
+			array(
+				'element'  => 'body #primary, header#masthead',
+				'function' => 'css',
+				'property' => 'font-size',
 				'units'    => 'em',
-	        ),
+			),
 		),
 	) );
 
@@ -187,63 +187,63 @@ if ( class_exists( 'Kirki' ) ) {
 		),
 		'transport' => 'postMessage',
 		'js_vars'   => array(
-	        array(
-	            'element'  => 'body #secondary',
-	            'function' => 'css',
-	            'property' => 'font-size',
+			array(
+				'element'  => 'body #secondary',
+				'function' => 'css',
+				'property' => 'font-size',
 				'units'    => 'em',
-	        ),
+			),
 		),
 	) );
 
 	Kirki::add_field( 'daphnee', array(
-	    'type'     => 'select2',
-	    'settings'  => 'base_font_family',
-	    'label'    => __( 'Font Family', 'daphnee' ),
-	    'section'  => 'typography_base',
-	    'default'  => 'Roboto',
-	    'priority' => 20,
-	    'choices'  => Kirki_Fonts::get_font_choices(),
-	    'output' => array(
-	        'element'  => 'body',
-	        'property' => 'font-family',
-	    ),
-	) );
-
-	Kirki::add_field( 'daphnee', array(
-	    'type'     => 'multicheck',
-	    'settings'  => 'base_font_subsets',
-	    'label'    => __( 'Google-Font subsets', 'daphnee' ),
-	    'description' => __( 'The subsets used from Google\'s API.', 'daphnee' ),
-	    'section'  => 'typography_base',
-	    'default'  => 'all',
-	    'priority' => 22,
-	    'choices'  => Kirki_Fonts::get_google_font_subsets(),
-	    'output' => array(
-			array(
-		        'element'  => 'body',
-		        'property' => 'font-subset',
-		    ),
+		'type'     => 'select2',
+		'settings'  => 'base_font_family',
+		'label'    => __( 'Font Family', 'daphnee' ),
+		'section'  => 'typography_base',
+		'default'  => 'Roboto',
+		'priority' => 20,
+		'choices'  => Kirki_Fonts::get_font_choices(),
+		'output' => array(
+			'element'  => 'body',
+			'property' => 'font-family',
 		),
 	) );
 
 	Kirki::add_field( 'daphnee', array(
-	    'type'     => 'slider',
-	    'settings'  => 'base_typography_font_weight',
-	    'label'    => __( 'Font Weight', 'daphnee' ),
-	    'section'  => 'typography_base',
-	    'default'  => 300,
-	    'priority' => 24,
-	    'choices'  => array(
-	        'min'  => 100,
-	        'max'  => 900,
-	        'step' => 100,
-	    ),
-	    'output' => array(
+		'type'     => 'multicheck',
+		'settings'  => 'base_font_subsets',
+		'label'    => __( 'Google-Font subsets', 'daphnee' ),
+		'description' => __( 'The subsets used from Google\'s API.', 'daphnee' ),
+		'section'  => 'typography_base',
+		'default'  => 'all',
+		'priority' => 22,
+		'choices'  => Kirki_Fonts::get_google_font_subsets(),
+		'output' => array(
 			array(
-		        'element'  => 'body',
-		        'property' => 'font-weight',
-		    ),
+				'element'  => 'body',
+				'property' => 'font-subset',
+			),
+		),
+	) );
+
+	Kirki::add_field( 'daphnee', array(
+		'type'     => 'slider',
+		'settings'  => 'base_typography_font_weight',
+		'label'    => __( 'Font Weight', 'daphnee' ),
+		'section'  => 'typography_base',
+		'default'  => 300,
+		'priority' => 24,
+		'choices'  => array(
+			'min'  => 100,
+			'max'  => 900,
+			'step' => 100,
+		),
+		'output' => array(
+			array(
+				'element'  => 'body',
+				'property' => 'font-weight',
+			),
 		),
 	) );
 
@@ -315,27 +315,27 @@ if ( class_exists( 'Kirki' ) ) {
 	 * COLORS
 	 ******************************/
 	 Kirki::add_field( 'daphnee', array(
- 		'type'        => 'color',
- 		'settings'    => 'links_color',
- 		'label'       => __( 'Links Color', 'daphnee' ),
- 		'description' => __( 'Select the main color for your site\s links', 'daphnee' ),
- 		'default'     => '#00BCD4',
- 		'section'     => 'colors',
- 		'output'      => array(
- 			array(
- 				'element'  => 'a, a:visited, a:hover',
- 				'property' => 'color',
- 			),
- 		),
- 		'transport'   => 'postMessage',
- 		'js_vars'     => array(
- 			array(
- 				'element'  => 'a, a:visited, a:hover',
- 				'function' => 'css',
- 				'property' => 'color',
- 			)
- 		)
- 	) );
+		'type'        => 'color',
+		'settings'    => 'links_color',
+		'label'       => __( 'Links Color', 'daphnee' ),
+		'description' => __( 'Select the main color for your site\s links', 'daphnee' ),
+		'default'     => '#00BCD4',
+		'section'     => 'colors',
+		'output'      => array(
+			array(
+				'element'  => 'a, a:visited, a:hover',
+				'property' => 'color',
+			),
+		),
+		'transport'   => 'postMessage',
+		'js_vars'     => array(
+			array(
+				'element'  => 'a, a:visited, a:hover',
+				'function' => 'css',
+				'property' => 'color',
+			)
+		)
+	) );
 
 	Kirki::add_field( 'daphnee', array(
 		'type'        => 'color',
@@ -440,18 +440,18 @@ if ( class_exists( 'Kirki' ) ) {
 	Kirki::add_field( 'daphnee', array(
 		'type'      => 'select',
 		'settings'  => 'header_image_repeat',
-	    'label'     => __( 'Header Image Repeat', 'daphnee' ),
-	    'section'   => 'header_image',
-	    'default'   => 'no-repeat',
-	    'priority'  => 20,
-	    'choices'   => array(
-	    	'initial'   => __( 'Initial', 'daphnee' ),
-	    	'inherit'   => __( 'Inherit', 'daphnee' ),
-	    	'repeat'    => __( 'Repeat', 'daphnee' ),
-	    	'no-repeat' => __( 'No repeat', 'daphnee' ),
-	    	'repeat-x'  => __( 'Repeat-X', 'daphnee' ),
-	    	'repeat-y'  => __( 'Repeat-Y', 'daphnee' ),
-	    ),
+		'label'     => __( 'Header Image Repeat', 'daphnee' ),
+		'section'   => 'header_image',
+		'default'   => 'no-repeat',
+		'priority'  => 20,
+		'choices'   => array(
+			'initial'   => __( 'Initial', 'daphnee' ),
+			'inherit'   => __( 'Inherit', 'daphnee' ),
+			'repeat'    => __( 'Repeat', 'daphnee' ),
+			'no-repeat' => __( 'No repeat', 'daphnee' ),
+			'repeat-x'  => __( 'Repeat-X', 'daphnee' ),
+			'repeat-y'  => __( 'Repeat-Y', 'daphnee' ),
+		),
 		'output'    => array(
 			array(
 				'element'  => '#masthead',
@@ -477,11 +477,11 @@ if ( class_exists( 'Kirki' ) ) {
 		'priority'  => 30,
 		'choices'   => array(
 			'initial'   => __( 'Initial', 'daphnee' ),
-	    	'inherit'   => __( 'Inherit', 'daphnee' ),
-	    	'cover'     => __( 'Cover', 'daphnee' ),
-	    	'contain '  => __( 'Contain', 'daphnee' ),
-	    	'auto'      => __( 'Auto', 'daphnee' ),
-    	),
+			'inherit'   => __( 'Inherit', 'daphnee' ),
+			'cover'     => __( 'Cover', 'daphnee' ),
+			'contain '  => __( 'Contain', 'daphnee' ),
+			'auto'      => __( 'Auto', 'daphnee' ),
+		),
 		'output' => array(
 			array(
 				'element'  => '#masthead',
@@ -499,23 +499,23 @@ if ( class_exists( 'Kirki' ) ) {
 	) );
 
 	Kirki::add_field( 'daphnee', array(
-	    'type'      => 'select',
-	    'settings'  => 'header_image_attach',
-	    'label'     => __( 'Header Image Attachment', 'daphnee' ),
-	    'section'   => 'header_image',
-	    'default'   => 'scroll',
-	    'priority'  => 40,
-	    'choices'   => array(
-	    	'initial'   => __( 'Initial', 'daphnee' ),
-	    	'inherit'   => __( 'Inherit', 'daphnee' ),
-	    	'scroll'    => __( 'Scroll', 'daphnee' ),
-	    	'fixed '    => __( 'Fixed', 'daphnee' ),
-	    ),
-	    'output' => array(
-	      'element'  => '#masthead',
-	      'property' => 'background-attachment',
-	    ),
-	    'transport' => 'postMessage',
+		'type'      => 'select',
+		'settings'  => 'header_image_attach',
+		'label'     => __( 'Header Image Attachment', 'daphnee' ),
+		'section'   => 'header_image',
+		'default'   => 'scroll',
+		'priority'  => 40,
+		'choices'   => array(
+			'initial'   => __( 'Initial', 'daphnee' ),
+			'inherit'   => __( 'Inherit', 'daphnee' ),
+			'scroll'    => __( 'Scroll', 'daphnee' ),
+			'fixed '    => __( 'Fixed', 'daphnee' ),
+		),
+		'output' => array(
+		  'element'  => '#masthead',
+		  'property' => 'background-attachment',
+		),
+		'transport' => 'postMessage',
 		'js_vars'   => array(
 			array(
 				'element'  => '#masthead',
@@ -526,14 +526,14 @@ if ( class_exists( 'Kirki' ) ) {
 	) );
 
 	Kirki::add_field( 'daphnee', array(
-	    'type'      => 'select',
-	    'settings'  => 'header_image_position',
-	    'label'     => __( 'Header Image Position', 'daphnee' ),
-	    'section'   => 'header_image',
-	    'default'   => 'center-center',
-	    'priority'  => 40,
-	    'choices'   => array(
-	    	'left-top'      => __( 'Left Top', 'daphnee' ),
+		'type'      => 'select',
+		'settings'  => 'header_image_position',
+		'label'     => __( 'Header Image Position', 'daphnee' ),
+		'section'   => 'header_image',
+		'default'   => 'center-center',
+		'priority'  => 40,
+		'choices'   => array(
+			'left-top'      => __( 'Left Top', 'daphnee' ),
 				'left-center'   => __( 'Left Center', 'daphnee' ),
 				'left-bottom'   => __( 'Left Bottom', 'daphnee' ),
 				'right-top'     => __( 'Right Top', 'daphnee' ),
@@ -542,14 +542,14 @@ if ( class_exists( 'Kirki' ) ) {
 				'center-top'    => __( 'Center Top', 'daphnee' ),
 				'center-center' => __( 'Center Center', 'daphnee' ),
 				'center-bottom' => __( 'Center Bottom', 'daphnee' ),
-	    ),
-	    'output'    => array(
+		),
+		'output'    => array(
 			array(
 				'element'  => '#masthead',
 				'property' => 'background-position',
 			),
-	    ),
-	    'transport' => 'postMessage',
+		),
+		'transport' => 'postMessage',
 		'js_vars'   => array(
 			array(
 				'element'  => '#masthead',
@@ -688,23 +688,117 @@ if ( class_exists( 'Kirki' ) ) {
 	 * SOCIAL LINKS
 	 ******************************/
 	Kirki::add_section( 'social_links', array(
-		'title'       => __( 'Social LInks', 'daphnee' ),
+		'title'       => __( 'Social Links', 'daphnee' ),
 		'priority'    => 100,
 	) );
 
-	$social_links = Daphnee_Social::social_networks();
-		$i = 0;
-		foreach ( $social_links as $social_link => $label ) {
-			Kirki::add_field( 'daphnee', array(
-				'type'     => 'text',
-				'setting'  => $social_link . '_link',
-				'label'    => $label . ' ' . __( 'link', 'maera_bs' ),
-				'section'  => 'social_links',
-				'default'  => '',
-				'priority' => 10 + $i,
-			) );
-			$i++;
-		}
+	Kirki::add_field( '', array(
+	'label'    => __( 'Social Links', 'kirki' ),
+	'settings' => 'social_links',
+	'type'     => 'repeater',
+	'section'  => 'social_links',
+	'default'  => array(),
+	'fields'   => array(
+		'subsetting_1' => array(
+			'type'     => 'select',
+			'label'    => 'Social Network',
+			'default'  => '',
+			'choices'  => array(
+			 	'' => __('choose one', 'daphnee'),
+			 	'twitter' => 'Twitter',
+			 	'facebook' => 'Facebook',
+			 	'google' => 'Google',
+			 	'pinterest' => 'Pinterest',
+				'foursquare' => 'Foursquare',
+				'yahoo' => 'Yahoo',
+				'skype' => 'Skype',
+				'yelp' => 'Yelp',
+				'feedburner' => 'Feedburner',
+				'linkedin' => 'LinkedIn',
+				'viadeo' => 'Viadeo',
+				'xing' => 'Xing',
+				'myspace' => 'Myspace',
+				'soundcloud' => 'Soundcloud',
+				'spotify' => 'Spotify',
+				'grooveshark' => 'Grooveshark',
+				'lastfm' => 'LastFM',
+				'youtube' => 'YouTube',
+				'vimeo' => 'Vimeo',
+				'dailymotion' => 'Dailymotion',
+				'vine' => 'Vine',
+				'flickr' => 'Flickr',
+				'500px' => '500px',
+				'instagram' => 'Instagram',
+				'wordpress' => 'WordPress',
+				'tumblr' => 'Tumblr',
+				'blogger' => 'Blogger',
+				'technorati' => 'Technorati',
+				'reddit' => 'Reddit',
+				'dribbble' => 'Dribbble',
+				'stumbleupon' => 'StumbleUpon',
+				'digg' => 'Digg',
+				'envato' => 'Envato',
+				'behance' => 'Behance',
+				'delicious' => 'Delicious',
+				'deviantart' => 'Deviantart',
+				'forrst' => 'Forrst',
+				'playstore' => 'Playstore',
+				'zerply' => 'Zerply',
+				'wikipedia' => 'Wikipedia',
+				'apple' => 'Apple',
+				'flattr' => 'Flattr',
+				'github' => 'Github',
+				'chimein' => 'Chimein',
+				'friendfeed' => 'Friendfeed',
+				'newsvine' => 'Newsvine',
+				'identica' => 'Identica',
+				'bebo' => 'Bebo',
+				'zynga' => 'Zynga',
+				'steam' => 'Steam',
+				'xbox' => 'Xbox',
+				'windows' => 'Windows',
+				'outlook' => 'Outlook',
+				'coderwall' => 'Coderwall',
+				'tripadvisor' => 'Tripadvisor',
+				'appnet' => 'Appnet',
+				'goodreads' => 'Goodreads',
+				'tripit' => 'Tripit',
+				'lanyrd' => 'Lanyrd',
+				'slideshare' => 'Slideshare',
+				'buffer' => 'Buffer',
+				'rss' => 'RSS',
+				'vkontakte' => 'Vkontakte',
+				'disqus' => 'Disqus',
+				'houzz' => 'Houzz',
+				'mail' => 'Mail',
+				'patreon' => 'Patreon',
+				'paypal' => 'Paypal',
+				'playstation' => 'Playstation',
+				'smugmug' => 'Smugmug',
+				'swarm' => 'Swarm',
+				'triplej' => 'Triplej',
+				'yammer' => 'Yammer',
+				'stackoverflow' => 'Stackoverflow',
+				'drupal' => 'Drupal',
+				'odnoklassniki' => 'Odnoklassniki',
+				'android' => 'Android',
+				'meetup' => 'Meetup',
+				'persona' => 'Persona',
+				'amazon' => 'Amazon',
+				'ello' => 'Ello',
+				'mixcloud' => 'Mixcloud',
+				'8tracks' => '8tracks',
+				'twitch' => 'Twitch',
+				'airbnb' => 'Airbnb',
+			)
+		),
+		'subsetting_2' => array(
+			'type'     => 'text',
+			'label'    => 'URL',
+			'default'  => 'https://'
+		),
+	)
+	) );
 
 }
 
