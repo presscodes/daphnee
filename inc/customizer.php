@@ -684,6 +684,28 @@ if ( class_exists( 'Kirki' ) ) {
 		'choices'     => $post_types
 	) );
 
+	/*******************************
+	 * SOCIAL LINKS
+	 ******************************/
+	Kirki::add_section( 'social_links', array(
+		'title'       => __( 'Social LInks', 'daphnee' ),
+		'priority'    => 100,
+	) );
+
+	$social_links = Daphnee_Social::social_networks();
+		$i = 0;
+		foreach ( $social_links as $social_link => $label ) {
+			Kirki::add_field( 'daphnee', array(
+				'type'     => 'text',
+				'setting'  => $social_link . '_link',
+				'label'    => $label . ' ' . __( 'link', 'maera_bs' ),
+				'section'  => 'social_links',
+				'default'  => '',
+				'priority' => 10 + $i,
+			) );
+			$i++;
+		}
+
 }
 
 function daphnee_add_featured_image( $content ) {
