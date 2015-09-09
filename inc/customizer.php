@@ -597,6 +597,58 @@ if ( class_exists( 'Kirki' ) ) {
 		'output'      => '#colophon.site-footer',
 	) );
 
+	Kirki::add_field( 'daphnee', array(
+		'type'     => 'number',
+		'section'  => 'footer',
+		'settings' => 'footer_top_border_width',
+		'label'    => __( 'Footer top border width', 'daphnee' ),
+		'default'  => '2',
+		'priority' => 55,
+		'output'   => array(
+			array(
+				'element'  => 'footer.site-footer',
+				'property' => 'border-top-width',
+				'units'    => 'px',
+			),
+	  ),
+	) );
+
+	Kirki::add_field( 'daphnee', array(
+		'type'     => 'select',
+		'section'  => 'footer',
+		'settings' => 'footer_top_border_style',
+		'label'    => __( 'Footer top border style', 'daphnee' ),
+		'default'  => 'dotted',
+		'priority' => 60,
+		'choices'  => array(
+			'dotted' => 'dotted',
+			'solid'  => 'solid',
+			'double' => 'double',
+			'dashed' => 'dashed',
+		),
+		'output'   => array(
+			array(
+				'element'  => 'footer.site-footer',
+				'property' => 'border-top-style',
+			),
+	  ),
+	) );
+
+	Kirki::add_field( 'daphnee', array(
+		'type'     => 'color',
+		'section'  => 'footer',
+		'settings' => 'footer_top_border_color',
+		'label'    => __( 'Footer top border style', 'daphnee' ),
+		'default'  => '#ffffff',
+		'priority' => 65,
+		'output'   => array(
+			array(
+				'element'  => 'footer.site-footer',
+				'property' => 'border-top-color',
+			),
+	  ),
+	) );
+
 	if ( ! Daphnee()->is_plus ) {
 		Kirki::add_field( 'daphnee', array(
 			'type'        => 'custom',
@@ -604,7 +656,7 @@ if ( class_exists( 'Kirki' ) ) {
 			'label'       => '',
 			'section'     => 'footer',
 			'default'     => '<div class="plus-info-control"><h3>' . __( 'Plus Options', 'daphnee' ) . '</h3><p><a class="daphnee-plus-link" target="_blank" href="' . Daphnee()->plus_link . '">' . __( 'Upgrade to Plus', 'daphnee' ) . '</a> and remove or edit the copyright link on your footer.</p></div>',
-			'priority'    => 55,
+			'priority'    => 100,
 		) );
 	}
 
