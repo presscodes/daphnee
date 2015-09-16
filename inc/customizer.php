@@ -699,7 +699,7 @@ if ( class_exists( 'Kirki' ) ) {
 	'section'  => 'social_links',
 	'default'  => array(),
 	'fields'   => array(
-		'subsetting_1' => array(
+		'label' => array(
 			'type'     => 'select',
 			'label'    => 'Social Network',
 			'default'  => '',
@@ -792,7 +792,7 @@ if ( class_exists( 'Kirki' ) ) {
 				'airbnb' => 'Airbnb',
 			)
 		),
-		'subsetting_2' => array(
+		'link' => array(
 			'type'     => 'text',
 			'label'    => 'URL',
 			'default'  => 'https://'
