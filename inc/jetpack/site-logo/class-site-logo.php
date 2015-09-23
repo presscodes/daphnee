@@ -124,7 +124,7 @@ class Site_Logo {
 	 * @uses wp_localize_script()
 	 */
 	public function preview_enqueue() {
-		wp_enqueue_script( 'site-logo-preview', plugins_url( '../js/site-logo.js', __FILE__ ), array( 'media-views' ), '', true );
+		wp_enqueue_script( 'site-logo-preview', get_template_directory_uri() . '/assets/js/site-logo.js', array( 'media-views' ), '', true );
 
 		// Don't bother passing in header text classes if the theme supports custom headers.
 		if ( ! current_theme_supports( 'custom-header' ) ) {
