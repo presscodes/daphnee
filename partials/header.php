@@ -2,7 +2,7 @@
 <header id="masthead" class="site-header" role="banner"<?php echo ( get_header_image() ) ? ' style="background-image:url(' . esc_url( get_header_image() ) . ');"' : ''; ?>>
     <?php tha_header_top(); ?>
     <div class="row">
-        <div class="site-branding col_3">
+        <div class="site-branding">
             <?php if ( function_exists( 'jetpack_the_site_logo' ) && !jetpack_has_site_logo() ) { ?>
                 <h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
                 <p class="site-description"><?php bloginfo( 'description' ); ?></p>
