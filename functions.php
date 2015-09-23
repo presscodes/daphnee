@@ -177,7 +177,7 @@ function daphnee_scripts() {
 add_action( 'wp_enqueue_scripts', 'daphnee_scripts' );
 
 if ( ! class_exists('Kirki') ) {
-	require get_template_directory() . '/inc/kirki/kirki.php';	
+	require get_template_directory() . '/inc/kirki/kirki.php';
 }
 
 require get_template_directory() . '/inc/classes/class-daphnee.php';
@@ -221,6 +221,11 @@ require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/jetpack.php';
 
 /**
+ * Load Replacement widget for recent posts
+ */
+require get_template_directory() . '/inc/classes/class-daphnee-widget-recent-posts.php';
+
+/**
  * Load tha theme hooks.
  * https://github.com/zamoose/themehookalliance
  */
@@ -228,3 +233,13 @@ include( 'inc/tha-theme-hooks.php' );
 
 // Declare support for all hook types
 add_theme_support( 'tha_hooks', array( 'all' ) );
+
+/**
+ * Replace some default widgets with our custom ones.
+ */
+function daphnee_register_widgets() {
+    // Replace the "Recent Posts" widget
+    unregister_widget( 'WP_Widget_Recent_Posts' );
+    register_widget( 'Daphnee_Widget_Recent_Posts' );
+}
+add_action( 'widgets_init', 'daphnee_register_widgets', 15 );
