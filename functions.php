@@ -140,7 +140,10 @@ function daphnee_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'daphnee_scripts' );
 
-require get_template_directory() . '/inc/kirki/kirki.php';
+if ( ! class_exists('Kirki') ) {
+	require get_template_directory() . '/inc/kirki/kirki.php';	
+}
+
 require get_template_directory() . '/inc/classes/class-daphnee.php';
 require get_template_directory() . '/inc/classes/class-daphnee-layout.php';
 require get_template_directory() . '/inc/classes/class-daphnee-customizer.php';
