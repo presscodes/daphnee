@@ -106,7 +106,7 @@ function daphnee_widgets_init() {
 		'after_title'   => '</h3>',
 	) );
 
-	$footer_widget_areas = get_theme_mod( 'footer_widget_areas' );
+	$footer_widget_areas = get_theme_mod( 'footer_widget_areas', '3' );
 	for ( $i = 1; $i <= $footer_widget_areas; $i++ ) {
 		register_sidebar( array(
 			'name'          => sprintf( esc_html__( 'Footer Widget Area %s', 'daphnee' ), $i ),
