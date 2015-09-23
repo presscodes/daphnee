@@ -185,6 +185,7 @@ require get_template_directory() . '/inc/classes/class-daphnee-layout.php';
 require get_template_directory() . '/inc/classes/class-daphnee-customizer.php';
 require get_template_directory() . '/inc/classes/class-daphnee-dynamic-css.php';
 require get_template_directory() . '/inc/classes/class-daphnee-social.php';
+require get_template_directory() . '/inc/classes/class-daphnee-blog.php';
 
 function Daphnee() {
 	return Daphnee::get_instance();
@@ -192,6 +193,7 @@ function Daphnee() {
 $customizer  = new Daphnee_Customizer();
 $dynamic_css = new Daphnee_Dynamic_CSS();
 $social      = new Daphnee_Social();
+$blog        = new Daphnee_Blog();
 
 /**
  * Implement the Custom Header feature.
