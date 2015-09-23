@@ -1,4 +1,6 @@
-// Number Controls
+/////////////////////
+// number controls
+/////////////////////
 .customize-control-number {
     .fs-number {
         position: relative;
@@ -106,4 +108,12 @@
             }
         }
     }
+}
+.rtl {
+	.customize-control-number {
+		.fs-number-arrow {
+			right: auto;
+  			left: 0;
+		}
+	}
 }

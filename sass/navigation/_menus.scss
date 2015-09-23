@@ -2,17 +2,22 @@
 	position: fixed;
     left: 0;
     top: 0;
-    padding-top: 3em;
     width: 20em;
     background-color: #333;
     height: 100%;
 	overflow-y: scroll;
 	margin-left: -20em;
+	padding: 0;
+	padding-top: 50px;
+	-webkit-box-shadow: 1px 0 5px 0 rgba(0,0,0,.1);
+	box-shadow: 1px 0 5px 0 rgba(0,0,0,.1);
 
 	ul {
 		list-style: none;
 		margin: 0;
 		padding-left: 0;
+		list-style: none;
+		list-style-type: none;
 
 		ul {
 			box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
@@ -79,7 +84,7 @@
 	display: block;
 }
 
-.menu-toggle {
+button.menu-toggle {
 	position: absolute;
 	top: 20px;
 	left: 20px;
@@ -88,6 +93,9 @@
 	padding: 0;
 	border-radius: 0;
 	background-color: #000;
+	box-shadow: none;
+	font-size: 1em;
+	border: none;
 	.dashicons {
 		color: #fff;
 		font-size: 2em;

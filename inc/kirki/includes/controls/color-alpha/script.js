@@ -1,3 +1,6 @@
+/**
+ * KIRKI CONTROL: COLOR-ALPHA
+ */
 jQuery(document).ready(function($) {
 
 	if ( typeof Color !== "undefined" ) {
@@ -70,7 +73,7 @@ jQuery(document).ready(function($) {
 				},
 				create: function(event, ui) {
 					var v = $(this).slider('value');
-					$(this).find('.ui-slider-handle').text(v);
+					$(this).find('.ui-slider-handle').text(v + '%');
 				},
 				value: alpha_val,
 				range: "max",

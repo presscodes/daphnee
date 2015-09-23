@@ -357,6 +357,35 @@ if ( class_exists( 'Kirki' ) ) {
 		),
 	) );
 
+	Kirki::add_field( 'daphnee', array(
+		'type'        => 'color-alpha',
+		'settings'    => 'menu_color',
+		'label'       => __( 'Menu Color', 'daphnee' ),
+		'description' => __( 'Select the menu color', 'daphnee' ),
+		'default'     => '#000000',
+		'section'     => 'colors',
+		'output'      => array(
+			array(
+				'element'  => 'button.menu-toggle',
+				'property' => 'background-color',
+			),
+			array(
+				'element'           => 'button.menu-toggle .dashicons',
+				'property'          => 'color',
+				'sanitize_callback' => array( 'Daphnee_Customizer', 'max_readability' ),
+			),
+			array(
+				'element'  => '#site-navigation.main-navigation',
+				'property' => 'background-color',
+			),
+			array(
+				'element'           => '#site-navigation.main-navigation a',
+				'property'          => 'color',
+				'sanitize_callback' => array( 'Daphnee_Customizer', 'max_readability' ),
+			),
+		),
+	) );
+
 	/*******************************
 	 * HEADER SECTION & OPTIONS
 	 ******************************/
