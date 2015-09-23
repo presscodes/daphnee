@@ -78,6 +78,10 @@ function daphnee_setup() {
 	/*
 	 * Enable support for Jetpack's site-logo
 	 * See http://jetpack.me/support/site-logo/
+	 *
+	 * Use filter 'jetpack_the_site_logo' to change output
+	 * https://github.com/Automattic/jetpack/blob/master/modules/theme-tools/site-logo/inc/functions.php#L140
+	 *
 	 */
 	add_theme_support( 'site-logo', array(
     'header-text' => array(
