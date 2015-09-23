@@ -5,6 +5,7 @@
     .row {
         padding-top: 0;
         padding-bottom: 0;
+        align-items: center;
     }
 
     .site-title {
@@ -18,5 +19,9 @@
     .site-description {
         font-size: .85em;
         margin: 0;
+    }
+
+    .site-branding {
+        order: 2;
     }
 }
