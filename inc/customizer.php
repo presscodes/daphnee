@@ -740,10 +740,12 @@ if ( class_exists( 'Kirki' ) ) {
 	) );
 
 	$post_types         = array();
-	$post_types_objects = get_post_types( array( 'public' => true ), 'objects' );
+	$post_types_objects = get_post_types( array( 'public' => true, 'exclude_from_search' => false ), 'objects', 'and' );
 	foreach ( $post_types_objects as $post_type ) {
 		$post_types[ $post_type->name ] = $post_type->labels->name;
 	}
+  // Remove attachment post type
+	$post_types = array_diff( $post_types, array('attachment' => 'Media') );
 
 	Kirki::add_field( 'daphnee', array(
 		'type'        => 'multicheck',
