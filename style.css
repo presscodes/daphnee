@@ -440,16 +440,19 @@ a {
   position: fixed;
   left: 0;
   top: 0;
-  padding-top: 3em;
   width: 20em;
   background-color: #333;
   height: 100%;
   overflow-y: scroll;
-  margin-left: -20em; }
+  margin-left: -20em;
+  padding: 0;
+  padding-top: 50px; }
   #site-navigation.main-navigation ul {
     list-style: none;
     margin: 0;
-    padding-left: 0; }
+    padding-left: 0;
+    list-style: none;
+    list-style-type: none; }
     #site-navigation.main-navigation ul ul {
       box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
       float: left;
