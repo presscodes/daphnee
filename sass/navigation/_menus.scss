@@ -79,6 +79,38 @@
 	display: block;
 }
 
+.menu-toggle {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	width: 3em;
+	height: 3em;
+	padding: 0;
+	border-radius: 0;
+	background-color: #000;
+	.dashicons {
+		color: #fff;
+		font-size: 2em;
+		line-height: 1em;
+		width: 1em;
+		height: 1em;
+	}
+}
+
+body.admin-bar {
+	.menu-toggle {
+		top: 52px;
+	}
+}
+
+@media screen and (max-width: 782px) {
+	body.admin-bar {
+		.menu-toggle {
+			top: 66px;
+		}
+	}
+}
+
 // @media screen and (min-width: 37.5em) {
 // 	.menu-toggle {
 // 		display: none;
