@@ -690,6 +690,48 @@ if ( class_exists( 'Kirki' ) ) {
 	}
 
 	/*******************************
+	 * BLOG SECTION & OPTIONS
+	 ******************************/
+	Kirki::add_section( 'blog', array(
+		'title'       => __( 'Blog', 'daphnee' ),
+		'description' => __( 'Configure your blog options', 'daphnee' ),
+		'priority'    => 80,
+	) );
+
+	Kirki::add_field( 'daphnee', array(
+		'type'        => 'radio-buttonset',
+		'settings'    => 'post_length',
+		'label'       => __( 'Post length in archives', 'daphnee' ),
+		'section'     => 'blog',
+		'default'     => 1,
+		'priority'    => 10,
+		'choices'     => array(
+			1 => __( 'Excerpt', 'daphnee' ),
+			2 => __( 'Full Post', 'daphnee' ),
+		),
+	) );
+
+	Kirki::add_field( 'daphnee', array(
+		'type'     => 'slider',
+		'section'  => 'blog',
+		'settings' => 'post_excerpt_length',
+		'label'    => __( 'Excerpt length in words', 'daphnee' ),
+		'default'  => '40',
+		'choices'  => array(
+			'min'  => '10',
+			'max'  => '200',
+			'step' => '1',
+		),
+		'required' => array(
+			array(
+				'setting'  => 'post_length',
+				'operator' => '==',
+				'value'    => 1,
+			)
+		)
+	) );
+
+	/*******************************
 	 * FEATURED IMAGES
 	 ******************************/
 	Kirki::add_section( 'featured_images', array(
@@ -698,10 +740,12 @@ if ( class_exists( 'Kirki' ) ) {
 	) );
 
 	$post_types         = array();
-	$post_types_objects = get_post_types( array( 'public' => true ), 'objects' );
+	$post_types_objects = get_post_types( array( 'public' => true, 'exclude_from_search' => false ), 'objects', 'and' );
 	foreach ( $post_types_objects as $post_type ) {
 		$post_types[ $post_type->name ] = $post_type->labels->name;
 	}
+  // Remove attachment post type
+	$post_types = array_diff( $post_types, array('attachment' => 'Media') );
 
 	Kirki::add_field( 'daphnee', array(
 		'type'        => 'multicheck',
