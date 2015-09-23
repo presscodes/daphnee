@@ -27,10 +27,7 @@ class Kirki_Controls_MultiCheck_Control extends WP_Customize_Control {
 	public $type = 'multicheck';
 
 	public function enqueue() {
-
-		wp_enqueue_script( 'kirki-multicheck', trailingslashit( kirki_url() ).'includes/controls/multicheck/kirki-multicheck.js', array( 'jquery' ) );
-		wp_enqueue_style( 'kirki-multicheck', trailingslashit( kirki_url() ).'includes/controls/multicheck/style.css' );
-
+		wp_enqueue_script( 'kirki-multicheck', trailingslashit( kirki_url() ) . 'includes/controls/multicheck/script.js', array( 'jquery' ) );
 	}
 
 	public function render_content() {
@@ -48,7 +45,7 @@ class Kirki_Controls_MultiCheck_Control extends WP_Customize_Control {
 			<span class="description customize-control-description"><?php echo $this->description; ?></span>
 		<?php endif; ?>
 
-		<?php $multi_values = ( ! is_array( $this->value() ) ) ? explode( ',', $this->value() ) : $this->value(); ?>
+		<?php $multi_values = ( is_array( $this->value() ) ) ? $this->value() : explode( ',', $this->value() ); ?>
 
 		<ul>
 			<?php foreach ( $this->choices as $value => $label ) : ?>
