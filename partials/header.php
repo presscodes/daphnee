@@ -3,12 +3,11 @@
     <?php tha_header_top(); ?>
     <div class="row">
         <div class="site-branding col_3">
-            <?php if ( is_front_page() && is_home() ) : ?>
+            <?php if ( function_exists( 'jetpack_the_site_logo' ) && !jetpack_has_site_logo() ) { ?>
                 <h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-            <?php else : ?>
-                <p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-            <?php endif; ?>
-            <p class="site-description"><?php bloginfo( 'description' ); ?></p>
+                <p class="site-description"><?php bloginfo( 'description' ); ?></p>
+            <?php } elseif ( function_exists( 'jetpack_the_site_logo' ) && jetpack_has_site_logo() ) { ?>
+            <?php jetpack_the_site_logo(); } ?>
         </div><!-- .site-branding -->
         <?php
         /**
