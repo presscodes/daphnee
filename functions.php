@@ -221,6 +221,11 @@ require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/jetpack.php';
 
 /**
+ * Load the Widgets-dropdown-addon class
+ */
+require get_template_directory() . '/inc/classes/class-daphnee-widget-dropdown-addon.php';
+
+/**
  * Load Replacement widget for recent posts
  */
 require get_template_directory() . '/inc/classes/class-daphnee-widget-recent-posts.php';
@@ -243,3 +248,20 @@ function daphnee_register_widgets() {
     register_widget( 'Daphnee_Widget_Recent_Posts' );
 }
 add_action( 'widgets_init', 'daphnee_register_widgets', 15 );
+
+/**
+ * Add "width" to all our widgets
+ */
+$widget_widths = new Daphnee_Widget_Dropdown_Addon( array(
+	'id'      => 'daphnee_widget_width',
+	'label'   => __( 'Width', 'daphnee' ),
+	'default' => 12,
+	'choices' => array(
+		12 => array( 'label' => __( 'Full', 'daphnee' ),       'classes' => 'col_12' ),
+		3  => array( 'label' => __( '1 Quarter', 'daphnee' ),  'classes' => 'col_3' ),
+		4  => array( 'label' => __( '1 Third', 'daphnee' ),    'classes' => 'col_4' ),
+		6  => array( 'label' => __( 'Half', 'daphnee' ),       'classes' => 'col_6' ),
+		8  => array( 'label' => __( '3 quarters', 'daphnee' ), 'classes' => 'col_8' ),
+		9  => array( 'label' => __( '2 Thirds', 'daphnee' ),   'classes' => 'col_9' ),
+	),
+) );
