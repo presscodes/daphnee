@@ -497,7 +497,10 @@ button.menu-toggle {
   box-shadow: none;
   font-size: 1em;
   margin-right: 1em;
-  border: 1px solid rgba(0, 0, 0, 0.1); }
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  position: absolute;
+  left: 0;
+  top: 0; }
   button.menu-toggle .dashicons {
     color: #fff;
     font-size: 2em;
@@ -505,6 +508,16 @@ button.menu-toggle {
     width: 1em;
     height: 1em; }
 
+.show-menu button.menu-toggle {
+  left: 17em;
+  z-index: 999999; }
+
+.admin-bar button.menu-toggle {
+  top: 32px; }
+
+@media screen and (max-width: 782px) {
+  .admin-bar button.menu-toggle {
+    top: 46px; } }
 .site-main .comment-navigation, .site-main
 .posts-navigation, .site-main
 .post-navigation {
@@ -526,6 +539,14 @@ button.menu-toggle {
   display: block;
   margin-left: 0;
   z-index: 99999; }
+  .show-menu #site-navigation.main-navigation .sub-menu {
+    width: 100%;
+    -webkit-transition: left 0.3s;
+    transition: left 0.3s;
+    text-indent: 1em;
+    left: -999em; }
+  .show-menu #site-navigation.main-navigation ul li:hover > ul.sub-menu {
+    left: 0; }
 
 /*--------------------------------------------------------------
 # Accessibility

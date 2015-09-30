@@ -95,6 +95,9 @@ button.menu-toggle {
 	font-size: 1em;
 	margin-right: 1em;
 	border: 1px solid rgba(0,0,0,.1);
+	position: absolute;
+	left: 0;
+	top: 0;
 	.dashicons {
 		color: #fff;
 		font-size: 2em;
@@ -102,6 +105,20 @@ button.menu-toggle {
 		width: 1em;
 		height: 1em;
 	}
+}
+
+.show-menu button.menu-toggle {
+  left: 17em;
+  z-index: 999999;
+}
+
+.admin-bar button.menu-toggle {
+	top: 32px;
+}
+@media screen and (max-width: 782px) {
+	.admin-bar button.menu-toggle {
+		top: 46px;
+	}	
 }
 
 // body.admin-bar {
@@ -152,4 +169,14 @@ button.menu-toggle {
 	display: block;
 	margin-left: 0;
 	z-index: 99999;
+	.sub-menu {
+	  width: 100%;
+	  -webkit-transition: left 0.3s;
+	  transition: left 0.3s;
+	  text-indent: 1em;
+	}
+	ul li:hover > ul.sub-menu {
+		left: 0;
+	}
 }
+
