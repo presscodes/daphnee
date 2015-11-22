@@ -17,135 +17,39 @@ wp.customize.controlConstructor['kirki-checkbox'] = wp.customize.Control.extend(
 /**
  * KIRKI CONTROL: CODE
  */
-jQuery( document ).ready( function($) {
-	$( 'textarea[data-editor]' ).each( function () {
-		var textarea = $( this );
-		var mode     = textarea.data( 'editor' );
-		var editDiv  = $( '<div>', {
-			position: 'absolute',
-			width: textarea.width(),
-			height: textarea.height(),
-			'class': textarea.attr( 'class' )
-		}).insertBefore( textarea );
-		textarea.css( 'display', 'none' );
-		var editor = ace.edit( editDiv[0] );
-		editor.renderer.setShowGutter( false );
-		editor.renderer.setPadding(10);
-		editor.getSession().setValue( textarea.val() );
-		editor.getSession().setMode( "ace/mode/" + mode );
-		editor.setTheme( "ace/theme/" + textarea.data( 'theme' ) );
-
-		editor.getSession().on( 'change', function(){
-			textarea.val( editor.getSession().getValue() ).trigger( 'change' );
-		});
-	});
-});
-
 wp.customize.controlConstructor['code'] = wp.customize.Control.extend( {
 	ready: function() {
 		var control = this;
-		this.container.on( 'change', 'textarea', function() {
-			control.setting.set( jQuery( this ).val() );
+		var element = control.container.find( '#kirki-codemirror-editor-' + control.id );
+		var editor  = CodeMirror.fromTextArea( element[0] );
+
+		editor.setOption( "value", control.setting._value );
+		editor.setOption( "mode", control.params.choices.language );
+		editor.setOption( "lineNumbers", true );
+		editor.setOption( "theme", control.params.choices.theme );
+		editor.setOption( "height", control.params.choices.height + 'px' );
+
+		editor.on('change', function() {
+			control.setting.set( editor.getValue() );
 		});
 	}
 });
 /**
  * KIRKI CONTROL: COLOR-ALPHA
  */
-jQuery(document).ready(function($) {
+wp.customize.controlConstructor['color-alpha'] = wp.customize.Control.extend( {
+	ready: function() {
+		var control   = this;
+		var picker    = this.container.find( '.kirki-color-control' );
+		var new_color = picker.val();
 
-	if ( typeof Color !== "undefined" ) {
-
-		Color.prototype.toString = function(remove_alpha) {
-			if (remove_alpha == 'no-alpha') {
-				return this.toCSS('rgba', '1').replace(/\s+/g, '');
-			}
-			if (this._alpha < 1) {
-				return this.toCSS('rgba', this._alpha).replace(/\s+/g, '');
-			}
-			var hex = parseInt(this._color, 10).toString(16);
-			if (this.error) return '';
-			if (hex.length < 6) {
-				for (var i = 6 - hex.length - 1; i >= 0; i--) {
-					hex = '0' + hex;
-				}
-			}
-			return '#' + hex;
-		};
-
-		$('.kirki-color-control').each(function() {
-			var $control = $(this),
-				value = $control.val().replace(/\s+/g, '');
-			// Manage Palettes
-			var palette_input = $control.attr('data-palette');
-			if (palette_input == 'false' || palette_input == false) {
-				var palette = false;
-			} else if (palette_input == 'true' || palette_input == true) {
-				var palette = true;
-			} else {
-				var palette = $control.attr('data-palette').split(",");
-			}
-			$control.wpColorPicker({ // change some things with the color picker
-				clear: function(event, ui) {
-					// TODO reset Alpha Slider to 100
-				},
-				change: function(event, ui) {
-					// send ajax request to wp.customizer to enable Save & Publish button
-					var _new_value = $control.val();
-					var key = $control.attr('data-customize-setting-link');
-					wp.customize(key, function(obj) {
-						obj.set(_new_value);
-					});
-					// change the background color of our transparency container whenever a color is updated
-					var $transparency = $control.parents('.wp-picker-container:first').find('.transparency');
-					// we only want to show the color at 100% alpha
-					$transparency.css('backgroundColor', ui.color.toString('no-alpha'));
-				},
-				palettes: palette // remove the color palettes
-			});
-			$('<div class="kirki-alpha-container"><div class="slider-alpha"></div><div class="transparency"></div></div>').appendTo($control.parents('.wp-picker-container'));
-			var $alpha_slider = $control.parents('.wp-picker-container:first').find('.slider-alpha');
-			// if in format RGBA - grab A channel value
-			if (value.match(/rgba\(\d+\,\d+\,\d+\,([^\)]+)\)/)) {
-				var alpha_val = parseFloat(value.match(/rgba\(\d+\,\d+\,\d+\,([^\)]+)\)/)[1]) * 100;
-				var alpha_val = parseInt(alpha_val);
-			} else {
-				var alpha_val = 100;
-			}
-			$alpha_slider.slider({
-				slide: function(event, ui) {
-					$(this).find('.ui-slider-handle').text(ui.value); // show value on slider handle
-					// send ajax request to wp.customizer to enable Save & Publish button
-					var _new_value = $control.val();
-					var key = $control.attr('data-customize-setting-link');
-					wp.customize(key, function(obj) {
-						obj.set(_new_value);
-					});
-				},
-				create: function(event, ui) {
-					var v = $(this).slider('value');
-					$(this).find('.ui-slider-handle').text(v + '%');
-				},
-				value: alpha_val,
-				range: "max",
-				step: 1,
-				min: 1,
-				max: 100
-			}); // slider
-			$alpha_slider.slider().on('slidechange', function(event, ui) {
-				var new_alpha_val = parseFloat(ui.value),
-					iris = $control.data('a8cIris'),
-					color_picker = $control.data('wpWpColorPicker');
-				iris._color._alpha = new_alpha_val / 100.0;
-				$control.val(iris._color.toString());
-				color_picker.toggler.css({
-					backgroundColor: $control.val()
-				});
-				// fix relationship between alpha slider and the 'side slider not updating.
-				var get_val = $control.val();
-				$($control).wpColorPicker('color', get_val);
-			});
-		}); // each
+		picker.wpColorPicker({
+			change: function( event, ui ) {
+				setTimeout( function(){
+					control.setting.set( picker.val() );
+				}, 100 );
+			},
+		});
 	}
 });
 /**
@@ -156,6 +60,8 @@ wp.customize.controlConstructor['dimension'] = wp.customize.Control.extend( {
 		var control = this;
 		var numeric_value = control.container.find('input[type=number]' ).val();
 		var units_value   = control.container.find('select' ).val();
+
+		jQuery( '.customize-control-dimension select' ).selectize();
 
 		this.container.on( 'change', 'input', function() {
 			numeric_value = jQuery( this ).val();
@@ -217,32 +123,355 @@ wp.customize.controlConstructor['dimension'] = wp.customize.Control.extend( {
 /**
  * KIRKI CONTROL: MULTICHECK
  */
-jQuery( document ).ready( function() {
-	jQuery( '.customize-control-multicheck input[type="checkbox"]' ).on( 'change', function() {
-		checkbox_values = jQuery( this ).parents( '.customize-control' ).find( 'input[type="checkbox"]:checked' ).map(
-			function() { return this.value; }
-		).get().join( ',' );
-		jQuery( this ).parents( '.customize-control' ).find( 'input[type="hidden"]' ).val( checkbox_values ).trigger( 'change' );
+wp.customize.controlConstructor['multicheck'] = wp.customize.Control.extend( {
+	ready: function() {
+		var control = this;
+
+		// Modified values
+		control.container.on( 'change', 'input', function() {
+			var compiled_value = [];
+			var i = 0;
+			jQuery.each( control.params.choices, function( key, value ) {
+				if ( jQuery( 'input[value="' + key + '"' ).is( ':checked' ) ) {
+					compiled_value[i] = key;
+					i++;
+				}
+			});
+			control.setting.set( compiled_value );
+			wp.customize.previewer.refresh();
+		});
 	}
-); } );
+});
 /**
  * KIRKI CONTROL: NUMBER
  */
-jQuery(document).ready(function($) {
-	"use strict";
-	$( ".customize-control-number input[type='number']").number();
-});
-
 wp.customize.controlConstructor['number'] = wp.customize.Control.extend( {
 	ready: function() {
 		var control = this;
+		var element = this.container.find( 'input' );
+
+		jQuery( element ).spinner();
+		if ( control.params.choices.min ) {
+			jQuery( element ).spinner( 'option', 'min', control.params.choices.min );
+		}
+		if ( control.params.choices.min ) {
+			jQuery( element ).spinner( 'option', 'max', control.params.choices.max );
+		}
+		if ( control.params.choices.min ) {
+			var control_step = ( 'any' == control.params.choises.step ) ? '0.001' : control.params.choices.step;
+			jQuery( element ).spinner( 'option', 'step', control_step );
+		}
 		this.container.on( 'change', 'input', function() {
 			control.setting.set( jQuery( this ).val() );
 		});
 	}
 });
-jQuery(document).ready(function($) {
-	$( '.customize-control-palette > div' ).buttonset();
+/**
+ * KIRKI CONTROL: PALETTE
+ */
+wp.customize.controlConstructor['palette'] = wp.customize.Control.extend( {
+	ready: function() {
+		var control = this;
+		this.container.on( 'click', 'input', function() {
+			control.setting.set( jQuery( this ).val() );
+		});
+	}
+});
+/**
+ * KIRKI CONTROL: PRESET
+ */
+
+wp.customize.controlConstructor['preset'] = wp.customize.Control.extend( {
+	ready: function() {
+		var control = this;
+		var element = this.container.find( 'select' );
+
+		jQuery( element ).selectize();
+
+		this.container.on( 'change', 'select', function() {
+
+			/**
+			 * First of all we have to get the control's value
+			 */
+			var select_value = jQuery( this ).val();
+			/**
+			 * Update the value using the customizer API and trigger the "save" button
+			 */
+			control.setting.set( select_value );
+			/**
+			 * We have to get the choices of this control
+			 * and then start parsing them to see what we have to do for each of the choices.
+			 */
+			jQuery.each( control.params.choices, function( key, value ) {
+				/**
+				 * If the current value of the control is the key of the choice,
+				 * then we can continue processing.
+				 * Otherwise there's no reason to do anything.
+				 */
+				if ( select_value == key ) {
+					/**
+					 * Each choice has an array of settings defined in it.
+					 * We'll have to loop through them all and apply the changes needed to them.
+					 */
+					jQuery.each( value['settings'], function( preset_setting, preset_setting_value ) {
+						/**
+						 * Get the control of the sub-setting.
+						 * This will be used to get properties we need from that control,
+						 * and determine if we need to do any further work based on those.
+						 */
+						var sub_control = wp.customize.settings.controls[ preset_setting ];
+						/**
+						 * Check if the control we want to affect actually exists.
+						 * If not then skip the item,
+						 */
+						if ( typeof sub_control === undefined ) {
+							return true;
+						}
+
+						/**
+						 * Get the control-type of this sub-setting.
+						 * We want the value to live-update on the controls themselves,
+						 * so depending on the control's type we'll need to do different things.
+						 */
+						var sub_control_type = sub_control['type'];
+
+						/**
+						 * Below we're starting to check the control tyype and depending on what that is,
+						 * make the necessary adjustments to it.
+						 */
+
+						/**
+						 * Control types:
+						 *     checkbox
+						 *     switch
+						 *     toggle
+						 *     kirki-checkbox
+						 */
+						if ( 'checkbox' == sub_control_type || 'switch' == sub_control_type || 'toggle' == sub_control_type || 'kirki-checkbox' == sub_control_type ) {
+
+							var input_element = wp.customize.control( preset_setting ).container.find( 'input' );
+							if ( 1 == preset_setting_value ) {
+								/**
+								 * Update the value visually in the control
+								 */
+								jQuery( input_element ).prop( "checked", true );
+								/**
+								 * Update the value in the customizer object
+								 */
+								wp.customize.instance( preset_setting ).set( true );
+							} else {
+								/**
+								 * Update the value visually in the control
+								 */
+								jQuery( input_element ).prop( "checked", false );
+								/**
+								 * Update the value in the customizer object
+								 */
+								wp.customize.instance( preset_setting ).set( false );
+							}
+
+						}
+						/**
+						 * Control types:
+						 *     select
+						 *     select2
+						 *     select2-multiple
+						 *     kirki-select
+						 */
+						else if ( 'select' == sub_control_type || 'select2' == sub_control_type || 'select2-multiple' == sub_control_type || 'kirki-select' == sub_control_type ) {
+
+							/**
+							 * Update the value visually in the control
+							 */
+							var input_element = wp.customize.control( preset_setting ).container.find( 'select' );
+							var $select = jQuery( input_element ).selectize();
+							var selectize = $select[0].selectize;
+							selectize.setValue( preset_setting_value, true );
+							/**
+							 * Update the value in the customizer object
+							 */
+							wp.customize.instance( preset_setting ).set( preset_setting_value );
+
+						}
+						/**
+						 * Control types:
+						 *     slider
+						 */
+						else if ( 'slider' == sub_control_type ) {
+
+							/**
+							 * Update the value visually in the control (slider)
+							 */
+							var input_element = wp.customize.control( preset_setting ).container.find( 'input' );
+							jQuery( input_element ).prop( "value", preset_setting_value );
+							/**
+							 * Update the value visually in the control (number)
+							 */
+							var numeric_element = wp.customize.control( preset_setting ).container.find( '.kirki_range_value .value' );
+							jQuery( numeric_element ).html( preset_setting_value );
+							/**
+							 * Update the value in the customizer object
+							 */
+							wp.customize.instance( preset_setting ).set( preset_setting_value );
+
+						}
+						/**
+						 * Control types:
+						 *     textarea
+						 *     kirki-textarea
+						 */
+						else if ( 'textarea' == sub_control_type || 'kirki-textarea' == sub_control_type ) {
+
+							/**
+							 * Update the value visually in the control
+							 */
+							var input_element = wp.customize.control( preset_setting ).container.find( 'textarea' );
+							jQuery( input_element ).prop( "value", preset_setting_value );
+							/**
+							 * Update the value in the customizer object
+							 */
+							wp.customize( preset_setting ).set( preset_setting_value );
+
+						}
+						/**
+						 * Control types:
+						 *     color
+						 *     kirki-color
+						 */
+						else if ( 'color' == sub_control_type || 'kirki-color' == sub_control_type ) {
+
+							/**
+							 * Update the value in the customizer object
+							 */
+							wp.customize.instance( preset_setting ).set( preset_setting_value );
+							/**
+							 * Update the value visually in the control
+							 */
+
+							wp.customize.control( preset_setting ).container.find( '.color-picker-hex' )
+								.attr( 'data-default-color', preset_setting_value )
+								.data( 'default-color', preset_setting_value )
+								.wpColorPicker( 'color', preset_setting_value );
+
+						}
+						else if ( 'color-alpha' == sub_control_type ) {
+
+							/**
+							 * Update the value visually in the control
+							 */
+							var alphaColorControl = wp.customize.control( preset_setting ).container.find( '.kirki-color-control' );
+
+							alphaColorControl
+								.attr( 'data-default-color', preset_setting_value )
+								.data( 'default-color', preset_setting_value )
+								.wpColorPicker( 'color', preset_setting_value );
+
+							/**
+							 * Update the value in the customizer object
+							 */
+							wp.customize.instance( preset_setting ).set( preset_setting_value );
+
+						}
+						/**
+						 * Control types:
+						 *     dimension
+						 */
+						else if ( 'dimension' == sub_control_type ) {
+
+							/**
+							 * Update the value in the customizer object
+							 */
+							wp.customize.instance( preset_setting ).set( preset_setting_value );
+							/**
+							 * Update the numeric value visually in the control
+							 */
+							var input_element = wp.customize.control( preset_setting ).container.find( 'input[type=number]' );
+							var numeric_value = parseFloat( preset_setting_value );
+							jQuery( input_element ).prop( "value", numeric_value );
+							/**
+							 * Update the units value visually in the control
+							 */
+							var select_element = wp.customize.control( preset_setting ).container.find( 'select' );
+							var units_value    = preset_setting_value.replace( parseFloat( preset_setting_value ), '' );
+							jQuery( select_element ).prop( "value", units_value );
+
+						}
+						/**
+						 * Control types:
+						 *     multicheck
+						 */
+						else if ( 'multicheck' == sub_control_type ) {
+
+							/**
+							 * Update the value in the customizer object
+							 */
+							wp.customize.instance( preset_setting ).set( preset_setting_value );
+							/**
+							 * Update the value visually in the control.
+							 * This value is an array so we'll have to go through each one of the items
+							 * in order to properly apply the value and check each checkbox separately.
+							 *
+							 * First we uncheck ALL checkboxes in the control
+							 * Then we check the ones that we want.
+							 */
+							wp.customize.control( preset_setting ).container.find( 'input' ).each(function() {
+								jQuery( this ).prop( "checked", false );
+							});
+
+							for	( index = 0; index < preset_setting_value.length; index++ ) {
+								var input_element = wp.customize.control( preset_setting ).container.find( 'input[value="' + preset_setting_value[ index ] + '"]' );
+								jQuery( input_element ).prop( "checked", true );
+							}
+
+						}
+						/**
+						 * Control types:
+						 *     radio-buttonset
+						 *     radio-image
+						 *     radio
+						 *     kirki-radio
+						 */
+						else if ( 'radio-buttonset' == sub_control_type || 'radio-image' == sub_control_type || 'radio' == sub_control_type || 'kirki-radio' == sub_control_type ) {
+
+							/**
+							 * Update the value visually in the control
+							 */
+							var input_element = wp.customize.control( preset_setting ).container.find( 'input[value="' + preset_setting_value + '"]' );
+							jQuery( input_element ).prop( "checked", true );
+							/**
+							 * Update the value in the customizer object
+							 */
+							wp.customize.instance( preset_setting ).set( preset_setting_value );
+
+						}
+						/**
+						 * Fallback for all other controls.
+						 */
+						else {
+
+							/**
+							 * Update the value visually in the control
+							 */
+							var input_element = wp.customize.control( preset_setting ).container.find( 'input' );
+							jQuery( input_element ).prop( "value", preset_setting_value );
+							/**
+							 * Update the value in the customizer object
+							 */
+							wp.customize.instance( preset_setting ).set( preset_setting_value );
+
+						}
+
+					});
+
+				}
+
+			});
+
+			wp.customize.previewer.refresh();
+
+		});
+
+	}
 });
 /**
  * KIRKI CONTROL: RADIO-BUTTONSET
@@ -712,51 +941,82 @@ wp.customize.controlConstructor['slider'] = wp.customize.Control.extend( {
 /**
  * KIRKI CONTROL: SORTABLE
  */
-jQuery(document).ready(function($) {
-	"use strict";
-	// initialize
-	$('.kirki-sortable > ul ~ input').each(function() {
-		var value = $(this).val();
-		try {
-			value = unserialize(value);
-		} catch (err) {
-			return;
-		}
-		var ul = $(this).siblings('ul:eq(0)');
-		ul.find('li').addClass('invisible').find('i.visibility').toggleClass('dashicons-visibility-faint');
-		$.each(value, function(i, val) {
-			ul.find('li[data-value=' + val + ']').removeClass('invisible').find('i.visibility').toggleClass('dashicons-visibility-faint');
-		});
-	});
-	$('.kirki-sortable > ul').each(function() {
-		$(this).sortable()
+wp.customize.controlConstructor['sortable'] = wp.customize.Control.extend({
+	ready: function() {
+		var control = this;
+
+		// The hidden field that keeps the data saved
+		this.settingField = this.container.find('[data-customize-setting-link]').first();
+
+		// The sortable container
+		this.sortableContainer = this.container.find( 'ul.sortable').first();
+
+		// Set the field value for the first time
+		this.setValue( this.setting.get(), false );
+
+
+		// Init the sortable container
+		this.sortableContainer.sortable()
 			.disableSelection()
 			.on("sortstop", function(event, ui) {
-				kirkiUpdateSortable(ui.item.parent());
+				control.sort();
 			})
 			.find('li').each(function() {
-				$(this).find('i.visibility').click(function() {
-					$(this).toggleClass('dashicons-visibility-faint').parents('li:eq(0)').toggleClass('invisible');
+				jQuery(this).find('i.visibility').click(function() {
+					jQuery(this).toggleClass('dashicons-visibility-faint').parents('li:eq(0)').toggleClass('invisible');
 				});
 			})
 			.click(function() {
-				kirkiUpdateSortable($(this).parents('ul:eq(0)'));
-			})
-	});
+				control.sort();
+			});
+	},
+
+	/**
+	 * Updates the sorting list
+	 */
+	sort: function() {
+		var newValue = [];
+		this.sortableContainer.find( 'li' ).each( function() {
+			var $this = jQuery(this);
+			if ( ! $this.is( '.invisible' ) ) {
+				newValue.push( $this.data('value' ) );
+			}
+		});
+
+		this.setValue( newValue, true );
+	},
+
+	/**
+	 * Get the current value of the setting
+	 *
+	 * @return Object
+	 */
+	getValue: function() {
+		// The setting is saved in PHP serialized format
+		return unserialize( this.setting.get() );
+	},
+
+	/**
+	 * Set a new value for the setting
+	 *
+	 * @param newValue Object
+	 * @param refresh If we want to refresh the previewer or not
+	 */
+	setValue: function( newValue, refresh ) {
+		newValue = serialize( newValue );
+		this.setting.set( newValue );
+
+		// Update the hidden field
+		this.settingField.val( newValue );
+
+		if ( refresh ) {
+			// Trigger the change event on the hidden field so
+			// previewer refresh the website on Customizer
+			this.settingField.trigger('change');
+		}
+	}
 
 });
-
-function kirkiUpdateSortable(ul) {
-	"use strict";
-	var $ = jQuery;
-	var values = [];
-	ul.find('li').each(function() {
-		if (!$(this).is('.invisible')) {
-			values.push($(this).attr('data-value'));
-		}
-	});
-	ul.siblings('input').eq(0).val(serialize(values)).trigger('change');
-}
 /**
  * KIRKI CONTROL: SPACING
  */
@@ -791,11 +1051,13 @@ wp.customize.controlConstructor['spacing'] = wp.customize.Control.extend( {
 				top_numeric_value = jQuery( this ).val();
 				compiled_value['top'] = top_numeric_value + top_units_value;
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 			this.container.on( 'change', '.top select', function() {
 				top_units_value = jQuery( this ).val();
 				compiled_value['top'] = top_numeric_value + top_units_value;
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 		}
 
@@ -808,11 +1070,13 @@ wp.customize.controlConstructor['spacing'] = wp.customize.Control.extend( {
 				bottom_numeric_value = jQuery( this ).val();
 				compiled_value['bottom'] = bottom_numeric_value + bottom_units_value;
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 			this.container.on( 'change', '.bottom select', function() {
 				bottom_units_value = jQuery( this ).val();
 				compiled_value['bottom'] = bottom_numeric_value + bottom_units_value;
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 		}
 
@@ -825,11 +1089,13 @@ wp.customize.controlConstructor['spacing'] = wp.customize.Control.extend( {
 				left_numeric_value = jQuery( this ).val();
 				compiled_value['left'] = left_numeric_value + left_units_value;
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 			this.container.on( 'change', '.left select', function() {
 				left_units_value = jQuery( this ).val();
 				compiled_value['left'] = left_numeric_value + left_units_value;
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 		}
 
@@ -842,11 +1108,13 @@ wp.customize.controlConstructor['spacing'] = wp.customize.Control.extend( {
 				right_numeric_value = jQuery( this ).val();
 				compiled_value['right'] = right_numeric_value + right_units_value;
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 			this.container.on( 'change', '.right select', function() {
 				right_units_value = jQuery( this ).val();
 				compiled_value['right'] = right_numeric_value + right_units_value;
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 		}
 	}
@@ -943,6 +1211,7 @@ wp.customize.controlConstructor['typography'] = wp.customize.Control.extend( {
 					compiled_value['bold'] = false;
 				}
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 		}
 
@@ -955,6 +1224,7 @@ wp.customize.controlConstructor['typography'] = wp.customize.Control.extend( {
 					compiled_value['italic'] = false;
 				}
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 		}
 
@@ -967,6 +1237,7 @@ wp.customize.controlConstructor['typography'] = wp.customize.Control.extend( {
 					compiled_value['underline'] = false;
 				}
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 		}
 
@@ -979,6 +1250,7 @@ wp.customize.controlConstructor['typography'] = wp.customize.Control.extend( {
 					compiled_value['strikethrough'] = false;
 				}
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 		}
 
@@ -987,6 +1259,7 @@ wp.customize.controlConstructor['typography'] = wp.customize.Control.extend( {
 			this.container.on( 'change', '.font-family select', function() {
 				compiled_value['font-family'] = jQuery( this ).val();
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 		}
 
@@ -999,11 +1272,13 @@ wp.customize.controlConstructor['typography'] = wp.customize.Control.extend( {
 				font_size_numeric_value = jQuery( this ).val();
 				compiled_value['font-size'] = font_size_numeric_value + font_size_units_value;
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 			this.container.on( 'change', '.font-size select', function() {
 				font_size_units_value = jQuery( this ).val();
 				compiled_value['font-size'] = font_size_numeric_value + font_size_units_value;
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 		}
 
@@ -1012,6 +1287,7 @@ wp.customize.controlConstructor['typography'] = wp.customize.Control.extend( {
 			this.container.on( 'change', '.font-weight select', function() {
 				compiled_value['font-weight'] = jQuery( this ).val();
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 		}
 
@@ -1020,6 +1296,7 @@ wp.customize.controlConstructor['typography'] = wp.customize.Control.extend( {
 			this.container.on( 'change', '.line-height input', function() {
 				compiled_value['line-height'] = jQuery( this ).val();
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 		}
 
@@ -1032,13 +1309,14 @@ wp.customize.controlConstructor['typography'] = wp.customize.Control.extend( {
 				letter_spacing_numeric_value = jQuery( this ).val();
 				compiled_value['letter-spacing'] = letter_spacing_numeric_value + letter_spacing_units_value;
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 			this.container.on( 'change', '.letter-spacing select', function() {
 				letter_spacing_units_value = jQuery( this ).val();
 				compiled_value['letter-spacing'] = letter_spacing_numeric_value + letter_spacing_units_value;
 				control.setting.set( compiled_value );
+				wp.customize.previewer.refresh();
 			});
 		}
-
 	}
 });

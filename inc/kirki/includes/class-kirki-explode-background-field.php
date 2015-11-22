@@ -37,10 +37,11 @@ class Kirki_Explode_Background_Field extends Kirki_Field_Sanitize {
 			$key             = esc_attr( $key );
 			$setting         = $key;
 			$help            = $field['help'];
-			$description     = isset( $i18n[ 'background-'.$key ] ) ? $i18n[ 'background-'.$key ] : '';
-			$output_property = 'background-'.$key;
+			$description     = isset( $i18n['background-' . $key] ) ? $i18n['background-' . $key] : '';
+			$output_property = 'background-' . $key;
 			$label           = ( 0 === $i ) ? $field['label'] : '';
 			$type            = 'select';
+			$sanitize_callback = 'esc_attr';
 
 			switch ( $key ) {
 				case 'color':
@@ -53,9 +54,11 @@ class Kirki_Explode_Background_Field extends Kirki_Field_Sanitize {
 					if ( isset( $field['default']['opacity'] ) && false === strpos( $value, 'rgb' ) ) {
 						$value = Kirki_Color::get_rgba( $value, $field['default']['opacity'] );
 					}
+					$sanitize_callback = array( 'Kirki_Sanitize_Values', 'color' );
 					break;
 				case 'image':
 					$type = 'image';
+					$sanitize_callback = 'esc_url_raw';
 					break;
 				case 'attach':
 					/**
@@ -73,10 +76,10 @@ class Kirki_Explode_Background_Field extends Kirki_Field_Sanitize {
 			 * If we're using options & option_name is set, then we need to modify the setting.
 			 */
 			if ( ( isset( $field['option_type'] ) && 'option' == $field['option_type'] && isset( $field['option_name'] ) ) && ! empty( $field['option_name'] ) ) {
-				$property_setting = str_replace( ']', '', str_replace( $field['option_name'].'[', '', $field['settings'] ) );
-				$property_setting = esc_attr( $field['option_name'] ).'['.esc_attr( $property_setting ).'_'.$setting.']';
+				$property_setting = str_replace( ']', '', str_replace( $field['option_name'] . '[', '', $field['settings'] ) );
+				$property_setting = esc_attr( $field['option_name'] ) . '[' . esc_attr( $property_setting ) . '_' . $setting . ']';
 			} else {
-				$property_setting = esc_attr( $field['settings'] ).'_'.$setting;
+				$property_setting = esc_attr( $field['settings'] ) . '_' . $setting;
 			}
 
 			/**
@@ -93,7 +96,7 @@ class Kirki_Explode_Background_Field extends Kirki_Field_Sanitize {
 				'required'    => $field['required'],
 				'description' => $description,
 				'default'     => $value,
-				'id'          => Kirki_Field_Sanitize::sanitize_id( array( 'settings' => Kirki_Field_Sanitize::sanitize_settings( array( 'settings' => $field['settings'].'_'.$setting ) ) ) ),
+				'id'          => Kirki_Field_Sanitize::sanitize_id( array( 'settings' => Kirki_Field_Sanitize::sanitize_settings( array( 'settings' => $field['settings'] . '_' . $setting ) ) ) ),
 				'choices'     => isset( $choices[ $key ] ) ? $choices[ $key ] : array(),
 				'output'      => ( '' != $field['output'] ) ? array(
 					array(
@@ -101,7 +104,7 @@ class Kirki_Explode_Background_Field extends Kirki_Field_Sanitize {
 						'property' => $output_property,
 					),
 				) : '',
-				'sanitize_callback' => Kirki_Field_Sanitize::fallback_callback( $type ),
+				'sanitize_callback' => ( isset( $sanitize_callback ) ) ? $sanitize_callback : Kirki_Field_Sanitize::fallback_callback( $type ),
 			) );
 			$i++;
 		}

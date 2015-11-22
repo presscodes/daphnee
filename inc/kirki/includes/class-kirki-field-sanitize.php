@@ -50,8 +50,6 @@ class Kirki_Field_Sanitize {
 			'id'                => '',
 			'capability'        => 'edit_theme_options',
 			'variables'         => null,
-			'active_callback'   => '__return_true',
-			'multiple'          => 1,
 		);
 		/**
 		 * Field type has to run before the others to accomodate older implementations
@@ -68,19 +66,52 @@ class Kirki_Field_Sanitize {
 		 */
 		$field['help'] = wp_strip_all_tags( $field['help'] );
 		/**
+		 * If the 'required' argument is set then we'll need to auto-calculate things.
+		 * Set 'active_callback' to 'Kirki_Active_Callback::evaluate'. ALl extra calculations will be handled there.
+		 */
+		if ( isset( $field['required'] ) ) {
+			$field['active_callback'] = array( 'Kirki_Active_Callback', 'evaluate' );
+		} elseif ( ! isset( $field['active_callback'] ) ) {
+			$field['active_callback'] = '__return_true';
+		}
+		/**
 		 * Get the right control type
 		 */
-		$field['type']              = self::sanitize_control_type( $field );
-		$field['settings']          = self::sanitize_settings( $field );
-		$field['choices']           = ( isset( $field['choices'] ) ) ? $field['choices'] : array();
-		$field['output']            = self::sanitize_output( $field );
+		$field['type'] = self::sanitize_control_type( $field );
+		/**
+		 * Sanitize the settings argument
+		 */
+		$field['settings'] = self::sanitize_settings( $field );
+		/**
+		 * Sanitize the choices argument
+		 */
+		$field['choices'] = ( isset( $field['choices'] ) ) ? $field['choices'] : array();
+		/**
+		 * Sanitize the output argument
+		 */
+		$field['output'] = isset( $field['output'] ) ? $field['output'] : array();
+		/**
+		 * Sanitize the sanitize_callback argument
+		 */
 		$field['sanitize_callback'] = self::sanitize_callback( $field );
-		$field['js_vars']           = self::sanitize_js_vars( $field );
-		$field['id']                = self::sanitize_id( $field );
-		$field['capability']        = self::sanitize_capability( $field );
-		$field['variables']         = ( isset( $field['variables'] ) && is_array( $field['variables'] ) ) ? $field['variables'] : null;
-		$field['active_callback']   = self::sanitize_active_callback( $field );
-		$field['multiple']          = ( isset( $field['multiple'] ) ) ? intval( $field['multiple'] ) : 1;
+		/**
+		 * Sanitize the id argument
+		 */
+		$field['id'] = self::sanitize_id( $field );
+		/**
+		 * Sanitize the capability argument
+		 */
+		$field['capability'] = self::sanitize_capability( $field );
+		/**
+		 * Sanitize the variables argument
+		 */
+		$field['variables'] = ( isset( $field['variables'] ) && is_array( $field['variables'] ) ) ? $field['variables'] : null;
+		/**
+		 * Make sure the "multiple" argument is properly formatted for <select> controls
+		 */
+		if ( 'kirki-select' == $field['type'] ) {
+			$field['multiple'] = ( isset( $field['multiple'] ) ) ? intval( $field['multiple'] ) : 1;
+		}
 
 		return $field;
 
@@ -119,7 +150,7 @@ class Kirki_Field_Sanitize {
 				 * Tweaks for backwards-compatibility:
 				 * Prior to version 0.8 radio-buttonset & radio-image were part of the checkbox control.
 				 */
-			 	if ( isset( $field['mode'] ) && 'buttonset' == $field['mode'] ) {
+				if ( isset( $field['mode'] ) && 'buttonset' == $field['mode'] ) {
 					$field['type'] = 'radio-buttonset';
 				} elseif ( isset( $field['mode'] ) && 'image' == $field['mode'] ) {
 					$field['type'] = 'radio-image';
@@ -223,37 +254,6 @@ class Kirki_Field_Sanitize {
 	}
 
 	/**
-	 * Sanitizes the setting active callback.
-	 *
-	 * @param array the field definition
-	 * @return string callable function name.
-	 */
-	public static function sanitize_active_callback( $field ) {
-
-		/**
-		 * If a custom 'active_callback' has been defined then return that.
-		 */
-		if ( isset( $field['active_callback'] ) ) {
-			return $field['active_callback'];
-		}
-
-		/**
-		 * If the 'required' argument is set then we'll need to auto-calculate things.
-		 * Set 'active_callback' to 'kirki_active_callback'. ALl extra calculations will be handled there.
-		 */
-		if ( isset( $field['required'] ) ) {
-			return 'kirki_active_callback';
-		}
-
-		/**
-		 * If all else fails, then fallback to __return_true
-		 * This way the control is always shown.
-		 */
-		return '__return_true';
-
-	}
-
-	/**
 	 * Sanitizes the setting permissions.
 	 *
 	 * @param array the field definition
@@ -316,7 +316,7 @@ class Kirki_Field_Sanitize {
 		 * If we're using options & option_name is set, then we need to modify the setting.
 		 */
 		if ( 'option' == self::sanitize_type( $field ) && '' != self::sanitize_option_name( $field ) ) {
-			$field['settings'] = esc_attr( $field['option_name'] ).'['.esc_attr( $field['settings'] ).']';
+			$field['settings'] = esc_attr( $field['option_name'] ) . '[' . esc_attr( $field['settings'] ) . ']';
 		}
 
 		return $field['settings'];
@@ -337,63 +337,6 @@ class Kirki_Field_Sanitize {
 	}
 
 	/**
-	 * Sanitizes the control output
-	 *
-	 * @param array the field definition
-	 * @return array
-	 */
-	public static function sanitize_output( $field ) {
-
-		/**
-		 * Early exit and return a NULL value if output is not set
-		 */
-		if ( ! isset( $field['output'] ) ) {
-			return null;
-		}
-
-		/**
-		 * sanitize using esc_attr if output is string.
-		 */
-		if ( ! is_array( $field['output'] ) ) {
-			return esc_attr( $field['output'] );
-		}
-		$output_sanitized = array();
-
-		/**
-		 * convert to multidimentional array if necessary
-		 */
-		if ( isset( $field['output']['element'] ) ) {
-			$field['output'] = array( $field['output'] );
-		}
-
-		/**
-		 * sanitize array items individually
-		 */
-		foreach ( $field['output'] as $output ) {
-			if ( ! isset( $output['media_query'] ) ) {
-				if ( isset( $output['prefix'] ) && ( false !== strpos( $output['prefix'], '@media' ) ) ) {
-					$output['media_query'] = $output['prefix'];
-					$output['prefix']      = '';
-					$output['suffix']      = '';
-				} else {
-					$output['media_query'] = 'global';
-				}
-			}
-			$output_sanitized[] = array(
-				'element'           => ( isset( $output['element'] ) ) ? sanitize_text_field( $output['element'] ) : '',
-				'property'          => ( isset( $output['property'] ) ) ? sanitize_text_field( $output['property'] ) : '',
-				'units'             => ( isset( $output['units'] ) ) ? sanitize_text_field( $output['units'] ) : '',
-				'sanitize_callback' => ( isset( $output['sanitize_callback'] ) ) ? $output['sanitize_callback'] : null,
-				'media_query'       => trim( sanitize_text_field( str_replace( '{', '', $output['media_query'] ) ) ),
-				'prefix'            => ( isset( $output['prefix'] ) ) ? sanitize_text_field( $output['prefix'] ) : '',
-			);
-		}
-
-		return $output_sanitized;
-
-	}
-
-	/**
 	 * Sanitizes the setting sanitize_callback
 	 *
 	 * @param array the field definition
@@ -410,34 +353,6 @@ class Kirki_Field_Sanitize {
 	}
 
 	/**
-	 * Sanitizes the control js_vars.
-	 *
-	 * @param array the field definition
-	 * @return array|null
-	 */
-	public static function sanitize_js_vars( $field ) {
-
-		$js_vars_sanitized = null;
-		if ( isset( $field['js_vars'] ) && is_array( $field['js_vars'] ) ) {
-			$js_vars_sanitized = array();
-			if ( isset( $field['js_vars']['element'] ) ) {
-				$field['js_vars'] = array( $field['js_vars'] );
-			}
-			foreach ( $field['js_vars'] as $js_vars ) {
-				$js_vars_sanitized[] = array(
-					'element'  => ( isset( $js_vars['element'] ) ) ? sanitize_text_field( $js_vars['element'] ) : '',
-					'function' => ( isset( $js_vars['function'] ) ) ? esc_js( $js_vars['function'] ) : '',
-					'property' => ( isset( $js_vars['property'] ) ) ? esc_js( $js_vars['property'] ) : '',
-					'units'    => ( isset( $js_vars['units'] ) ) ? esc_js( $js_vars['units'] ) : '',
-					'prefix'   => ( isset( $js_vars['prefix'] ) ) ? esc_js( $js_vars['prefix'] ) : '',
-				);
-			}
-		}
-		return $js_vars_sanitized;
-
-	}
-
-	/**
 	 * Sanitizes the control transport.
 	 *
 	 * @param string the control type
@@ -449,11 +364,11 @@ class Kirki_Field_Sanitize {
 			case 'checkbox':
 			case 'toggle':
 			case 'switch':
-				$sanitize_callback = array( 'Kirki_Sanitize', 'checkbox' );
+				$sanitize_callback = array( 'Kirki_Sanitize_Values', 'checkbox' );
 				break;
 			case 'color':
 			case 'color-alpha':
-				$sanitize_callback = array( 'Kirki_Sanitize', 'color' );
+				$sanitize_callback = array( 'Kirki_Sanitize_Values', 'color' );
 				break;
 			case 'image':
 			case 'upload':
@@ -462,17 +377,20 @@ class Kirki_Field_Sanitize {
 			case 'radio':
 			case 'radio-image':
 			case 'radio-buttonset':
+			case 'palette':
+				$sanitize_callback = 'esc_attr';
+				break;
 			case 'select':
 			case 'select2':
-			case 'palette':
-				$sanitize_callback = array( 'Kirki_Sanitize', 'unfiltered' );
+			case 'select2-multiple':
+				$sanitize_callback = array( 'Kirki_Sanitize_Values', 'unfiltered' );
 				break;
 			case 'dropdown-pages':
-				$sanitize_callback = array( 'Kirki_Sanitize', 'dropdown_pages' );
+				$sanitize_callback = array( 'Kirki_Sanitize_Values', 'dropdown_pages' );
 				break;
 			case 'slider':
 			case 'number':
-				$sanitize_callback = array( 'Kirki_Sanitize', 'number' );
+				$sanitize_callback = array( 'Kirki_Sanitize_Values', 'number' );
 				break;
 			case 'text':
 			case 'textarea':
@@ -480,13 +398,13 @@ class Kirki_Field_Sanitize {
 				$sanitize_callback = 'esc_textarea';
 				break;
 			case 'multicheck':
-				$sanitize_callback = array( 'Kirki_Sanitize', 'multicheck' );
+				$sanitize_callback = array( 'Kirki_Sanitize_Values', 'multicheck' );
 				break;
 			case 'sortable':
-				$sanitize_callback = array( 'Kirki_Sanitize', 'sortable' );
+				$sanitize_callback = array( 'Kirki_Sanitize_Values', 'sortable' );
 				break;
 			default:
-				$sanitize_callback = array( 'Kirki_Sanitize', 'unfiltered' );
+				$sanitize_callback = array( 'Kirki_Sanitize_Values', 'unfiltered' );
 				break;
 		}
 
